@@ -35,7 +35,7 @@ public class AIOApp extends Application {
 
 ### 3.开始测量
 
-#####3.1 usb转串口测量
+####3.1 usb转串口测量
 ```
 //测量所有设备
   @Override
@@ -96,7 +96,7 @@ public class AIOApp extends Application {
 
 ```
 
-#####3.2 串口测量
+####3.2 串口测量
 ```
 //测量所有设备
    @Override
