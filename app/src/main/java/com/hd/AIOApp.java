@@ -2,6 +2,7 @@ package com.hd;
 
 import android.app.Application;
 
+import com.hd.usbserialport.sample.AIOComponentHandler;
 import com.siheal.usbserialport.method.AIODeviceMeasure;
 
 
@@ -13,6 +14,6 @@ public class AIOApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AIODeviceMeasure.INSTANCE.init(this,BuildConfig.DEBUG);
+        AIODeviceMeasure.INSTANCE.init(this, BuildConfig.DEBUG,new AIOComponentHandler());
     }
 }

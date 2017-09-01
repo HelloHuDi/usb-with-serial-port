@@ -1,1 +1,1 @@
-include ':app', ':sihealdevicelibrary', ':usbserialport', ':javalib'
+include ':app', ':sihealdevicelibrary', ':usbserialport', ':javalib', ':sample'

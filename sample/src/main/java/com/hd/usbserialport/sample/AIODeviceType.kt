@@ -1,4 +1,4 @@
-package com.siheal.usbserialport.config
+package com.hd.usbserialport.sample
 
 
 /**
@@ -14,5 +14,5 @@ object AIODeviceType{
     /**
      * 调试
      */
-    val DEBUG_DEVICE = 0
+     val DEBUG_DEVICE = 0
 }

@@ -11,12 +11,10 @@ import com.hd.serialport.param.UsbMeasureParameter
 import com.hd.serialport.utils.L
 import com.siheal.usbserialport.R
 import com.siheal.usbserialport.config.AIOComponent
-import com.siheal.usbserialport.config.AIODeviceType
 import com.siheal.usbserialport.device.Device
 import com.siheal.usbserialport.device.SerialPortDevice
 import com.siheal.usbserialport.device.UsbPortDevice
 import com.siheal.usbserialport.listener.ReceiveResultListener
-import com.siheal.usbserialport.scan.DeviceScanner
 
 /**
  * Created by hd on 2017/8/28 .
@@ -27,7 +25,7 @@ object AIODeviceMeasure {
 
     private var context: Context? = null
 
-    private var aioDeviceType = AIODeviceType.UNKNOWN_DEVICE
+    private var aioDeviceType = -1
 
     private var aioComponent: AIOComponent? = null
 
@@ -56,11 +54,6 @@ object AIODeviceMeasure {
         AIODeviceMeasure.listener = listener
         status = MeasureStatus.PREPARE
         return this
-    }
-
-    fun Preload() {
-        check()
-        DeviceScanner().scan()
     }
 
     fun addCondition(vararg t: Any): AIODeviceMeasure {

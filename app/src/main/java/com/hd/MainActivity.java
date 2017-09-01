@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hd.serialport.utils.L;
-import com.siheal.usbserialport.config.AIODeviceType;
+import com.hd.usbserialport.sample.AIODeviceType;
 import com.siheal.usbserialport.listener.ReceiveResultListener;
 import com.siheal.usbserialport.method.AIODeviceMeasure;
 import com.siheal.usbserialport.result.ParserResult;
