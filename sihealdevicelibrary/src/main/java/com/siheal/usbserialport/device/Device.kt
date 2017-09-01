@@ -34,6 +34,8 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
 
     protected var t: List<Any>? = null
 
+    protected var aioComponent: AIOComponent? = null
+
     protected abstract fun measure()
 
     /**
@@ -45,14 +47,21 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
     }
 
     /**
+     * provide aio component
+     */
+    fun addAIOComponent(aioComponent: AIOComponent?) {
+        this.aioComponent=aioComponent
+    }
+
+    /**
      * write initialization device instruction
      */
-    fun initializationInstruct() = AIOComponent.getInitializationInstructInstruct(aioDeviceType)
+    fun initializationInstruct() = aioComponent?.getInitializationInstructInstruct(aioDeviceType)
 
     /**
      * write release(shut down device) instruction
      */
-    fun releaseInstruct() = AIOComponent.getReleaseInstruct(aioDeviceType)
+    fun releaseInstruct() = aioComponent?.getReleaseInstruct(aioDeviceType)
 
     fun startMeasure() {
         if (status == MeasureStatus.PREPARE) {

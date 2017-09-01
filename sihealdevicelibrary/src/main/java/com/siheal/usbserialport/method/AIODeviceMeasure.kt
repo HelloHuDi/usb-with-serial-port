@@ -2,12 +2,14 @@ package com.siheal.usbserialport.method
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.widget.Toast
 import com.hd.serialport.config.MeasureStatus
 import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.param.UsbMeasureParameter
 import com.hd.serialport.utils.L
+import com.siheal.usbserialport.R
 import com.siheal.usbserialport.config.AIOComponent
 import com.siheal.usbserialport.config.AIODeviceType
 import com.siheal.usbserialport.device.Device
@@ -27,6 +29,8 @@ object AIODeviceMeasure {
 
     private var aioDeviceType = AIODeviceType.UNKNOWN_DEVICE
 
+    private var aioComponent: AIOComponent? = null
+
     private var parameter: MeasureParameter? = null
 
     private var listener: ReceiveResultListener? = null
@@ -40,16 +44,17 @@ object AIODeviceMeasure {
      */
     private var t: MutableList<Any> = mutableListOf()
 
-    fun init(context: Context, openLog: Boolean) {
+    fun init(context: Context, openLog: Boolean, aioComponent: AIOComponent) {
+        this.aioComponent = aioComponent
         AIODeviceMeasure.context = context.applicationContext
         DeviceMeasureController.init(AIODeviceMeasure.context!!, openLog)
-        status = MeasureStatus.PREPARE
     }
 
     fun with(aioDeviceType: Int, listener: ReceiveResultListener): AIODeviceMeasure {
         AIODeviceMeasure.aioDeviceType = aioDeviceType
-        AIODeviceMeasure.parameter = AIOComponent.getMeasureParameter(context!!,aioDeviceType)
+        AIODeviceMeasure.parameter = aioComponent!!.getMeasureParameter(context!!, aioDeviceType)
         AIODeviceMeasure.listener = listener
+        status = MeasureStatus.PREPARE
         return this
     }
 
@@ -66,9 +71,14 @@ object AIODeviceMeasure {
     }
 
     fun startMeasure() {
-        check()
-        status = MeasureStatus.RUNNING
-        initDevice()?.startMeasure()
+        try {
+            check()
+            status = MeasureStatus.RUNNING
+            initDevice()?.startMeasure()
+        } catch (ignored: Exception) {
+            Toast.makeText(context!!, context!!.resources.getString(R.string.unpredictable_errors), Toast.LENGTH_SHORT).show()
+            stopMeasure()
+        }
     }
 
     fun stopMeasure() {
@@ -76,7 +86,7 @@ object AIODeviceMeasure {
         if (status == MeasureStatus.RUNNING && device != null) {
             status = MeasureStatus.STOPPING
             device!!.stopMeasure()
-            device=null
+            device = null
             t.clear()
             status = MeasureStatus.STOPPED
         }
@@ -85,11 +95,12 @@ object AIODeviceMeasure {
     private fun initDevice(): Device? {
         if (parameter is SerialPortMeasureParameter) {
             device = SerialPortDevice(context!!, aioDeviceType, parameter as SerialPortMeasureParameter,
-                    AIOComponent.getParser(aioDeviceType)!!, listener!!)
+                    aioComponent!!.getParser(aioDeviceType)!!, listener!!)
         } else if (parameter is UsbMeasureParameter) {
-            device=UsbPortDevice(context!!, aioDeviceType, AIOComponent.getUsbSerialPort(context!!, aioDeviceType),
-                    parameter as UsbMeasureParameter, AIOComponent.getParser(aioDeviceType)!!, listener!!)
+            device = UsbPortDevice(context!!, aioDeviceType, aioComponent!!.getUsbSerialPort(context!!, aioDeviceType),
+                    parameter as UsbMeasureParameter, aioComponent!!.getParser(aioDeviceType)!!, listener!!)
         }
+        device?.addAIOComponent(aioComponent)
         device?.addCondition(t)
         return device
     }
