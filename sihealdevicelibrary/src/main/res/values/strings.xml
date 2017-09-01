@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">sihealdevicelibrary</string>
+    <string name="measure_error">本次测量失败</string>
+</resources>
