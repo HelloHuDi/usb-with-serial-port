@@ -1,4 +1,4 @@
-package com.siheal.usbserialport.parser
+package com.aio.usbserialport.parser
 
 import com.hd.serialport.usb_driver.UsbSerialPort
 

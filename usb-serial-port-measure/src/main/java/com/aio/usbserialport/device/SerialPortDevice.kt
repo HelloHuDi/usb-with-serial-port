@@ -1,12 +1,12 @@
-package com.siheal.usbserialport.device
+package com.aio.usbserialport.device
 
 import android.content.Context
 import com.hd.serialport.listener.SerialPortMeasureListener
 import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.param.SerialPortMeasureParameter
-import com.siheal.usbserialport.listener.ReceiveResultListener
-import com.siheal.usbserialport.parser.DataPackageEntity
-import com.siheal.usbserialport.parser.Parser
+import com.aio.usbserialport.listener.ReceiveResultListener
+import com.aio.usbserialport.parser.DataPackageEntity
+import com.aio.usbserialport.parser.Parser
 import java.io.OutputStream
 
 

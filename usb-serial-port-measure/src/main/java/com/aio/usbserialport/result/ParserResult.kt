@@ -1,4 +1,4 @@
-package com.siheal.usbserialport.result
+package com.aio.usbserialport.result
 
 import java.io.Serializable
 

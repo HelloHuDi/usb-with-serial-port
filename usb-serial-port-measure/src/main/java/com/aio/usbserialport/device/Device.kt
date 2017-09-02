@@ -1,4 +1,4 @@
-package com.siheal.usbserialport.device
+package com.aio.usbserialport.device
 
 import android.content.Context
 import android.os.SystemClock
@@ -6,13 +6,13 @@ import com.hd.serialport.config.MeasureStatus
 import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.usb_driver.UsbSerialPort
 import com.hd.serialport.utils.L
-import com.siheal.usbserialport.R
-import com.siheal.usbserialport.config.AIOComponent
-import com.siheal.usbserialport.listener.ReceiveResultListener
-import com.siheal.usbserialport.method.AIODeviceMeasure
-import com.siheal.usbserialport.parser.DataPackageEntity
-import com.siheal.usbserialport.parser.Parser
-import com.siheal.usbserialport.result.ParserResult
+import com.aio.usbserialport.R
+import com.aio.usbserialport.config.AIOComponent
+import com.aio.usbserialport.listener.ReceiveResultListener
+import com.aio.usbserialport.method.AIODeviceMeasure
+import com.aio.usbserialport.parser.DataPackageEntity
+import com.aio.usbserialport.parser.Parser
+import com.aio.usbserialport.result.ParserResult
 import java.io.OutputStream
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue

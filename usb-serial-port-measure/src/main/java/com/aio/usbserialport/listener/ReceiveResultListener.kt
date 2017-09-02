@@ -1,7 +1,7 @@
-package com.siheal.usbserialport.listener
+package com.aio.usbserialport.listener
 
 import android.support.annotation.NonNull
-import com.siheal.usbserialport.result.ParserResult
+import com.aio.usbserialport.result.ParserResult
 
 /**
  * Created by hd on 2017/8/31.

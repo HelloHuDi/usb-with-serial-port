@@ -1,12 +1,12 @@
-package com.siheal.usbserialport.cache
+package com.aio.usbserialport.cache
 
 import android.content.Context
 import android.hardware.usb.UsbDevice
 import android.util.Base64
 import com.hd.serialport.usb_driver.*
 import com.hd.serialport.utils.L
-import com.siheal.usbserialport.utils.ParcelableUtil
-import com.siheal.usbserialport.utils.PreferenceUtil
+import com.aio.usbserialport.utils.ParcelableUtil
+import com.aio.usbserialport.utils.PreferenceUtil
 
 /**
  * Created by hd on 2017/8/31 .

@@ -4,9 +4,9 @@ import android.content.Context
 import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.usb_driver.UsbSerialPort
-import com.siheal.usbserialport.cache.UsbSerialPortCache
-import com.siheal.usbserialport.config.AIOComponent
-import com.siheal.usbserialport.parser.Parser
+import com.aio.usbserialport.cache.UsbSerialPortCache
+import com.aio.usbserialport.config.AIOComponent
+import com.aio.usbserialport.parser.Parser
 
 
 /**

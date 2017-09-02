@@ -1,4 +1,4 @@
-package com.siheal.usbserialport.method
+package com.aio.usbserialport.method
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,12 +9,12 @@ import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.param.UsbMeasureParameter
 import com.hd.serialport.utils.L
-import com.siheal.usbserialport.R
-import com.siheal.usbserialport.config.AIOComponent
-import com.siheal.usbserialport.device.Device
-import com.siheal.usbserialport.device.SerialPortDevice
-import com.siheal.usbserialport.device.UsbPortDevice
-import com.siheal.usbserialport.listener.ReceiveResultListener
+import com.aio.usbserialport.R
+import com.aio.usbserialport.config.AIOComponent
+import com.aio.usbserialport.device.Device
+import com.aio.usbserialport.device.SerialPortDevice
+import com.aio.usbserialport.device.UsbPortDevice
+import com.aio.usbserialport.listener.ReceiveResultListener
 
 /**
  * Created by hd on 2017/8/28 .

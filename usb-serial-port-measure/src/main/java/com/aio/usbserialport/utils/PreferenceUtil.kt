@@ -1,4 +1,4 @@
-package com.siheal.usbserialport.utils
+package com.aio.usbserialport.utils
 
 import android.content.Context
 import android.content.SharedPreferences

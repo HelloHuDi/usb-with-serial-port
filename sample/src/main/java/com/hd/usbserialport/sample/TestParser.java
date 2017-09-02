@@ -1,6 +1,6 @@
 package com.hd.usbserialport.sample;
 
-import com.siheal.usbserialport.parser.Parser;
+import com.aio.usbserialport.parser.Parser;
 
 import org.jetbrains.annotations.NotNull;
 

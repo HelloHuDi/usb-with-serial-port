@@ -1,9 +1,9 @@
 package com.hd.usbserialport.sample
 
 import com.hd.serialport.utils.L
-import com.siheal.usbserialport.cache.UsbSerialPortCache
-import com.siheal.usbserialport.parser.Parser
-import com.siheal.usbserialport.result.PlaceholderResult
+import com.aio.usbserialport.cache.UsbSerialPortCache
+import com.aio.usbserialport.parser.Parser
+import com.aio.usbserialport.result.PlaceholderResult
 import java.util.*
 
 

@@ -3,7 +3,7 @@ package com.hd;
 import android.app.Application;
 
 import com.hd.usbserialport.sample.AIOComponentHandler;
-import com.siheal.usbserialport.method.AIODeviceMeasure;
+import com.aio.usbserialport.method.AIODeviceMeasure;
 
 
 /**

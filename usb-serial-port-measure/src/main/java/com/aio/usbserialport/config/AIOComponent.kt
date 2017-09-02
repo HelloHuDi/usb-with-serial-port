@@ -1,10 +1,10 @@
-package com.siheal.usbserialport.config
+package com.aio.usbserialport.config
 
 import android.content.Context
 import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.usb_driver.UsbSerialPort
-import com.siheal.usbserialport.parser.Parser
+import com.aio.usbserialport.parser.Parser
 
 
 /**

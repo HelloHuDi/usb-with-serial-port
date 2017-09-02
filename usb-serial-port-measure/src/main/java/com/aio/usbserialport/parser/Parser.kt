@@ -1,10 +1,10 @@
-package com.siheal.usbserialport.parser
+package com.aio.usbserialport.parser
 
 import com.hd.serialport.config.MeasureStatus
 import com.hd.serialport.usb_driver.UsbSerialPort
 import com.hd.serialport.utils.L
-import com.siheal.usbserialport.device.Device
-import com.siheal.usbserialport.result.ParserResult
+import com.aio.usbserialport.device.Device
+import com.aio.usbserialport.result.ParserResult
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
 

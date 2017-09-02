@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.hd.serialport.utils.L;
 import com.hd.usbserialport.sample.AIODeviceType;
-import com.siheal.usbserialport.listener.ReceiveResultListener;
-import com.siheal.usbserialport.method.AIODeviceMeasure;
-import com.siheal.usbserialport.result.ParserResult;
+import com.aio.usbserialport.listener.ReceiveResultListener;
+import com.aio.usbserialport.method.AIODeviceMeasure;
+import com.aio.usbserialport.result.ParserResult;
 
 
 /**
