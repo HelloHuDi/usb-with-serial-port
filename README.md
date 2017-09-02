@@ -1,14 +1,12 @@
-## usb-with-serial-port
+## 使用kotlin编写，提供android系统下usb转串口及串口(UART,RS232)通信方式
 
-## 本项目使用kotlin编写，提供android系统下usb转串口及串口(UART,RS232)通信方式
+## 参考串口通信源码： https://github.com/cepr/android-serialport-api
 
-## 串口通信源码： https://github.com/cepr/android-serialport-api
+## 参考usb转串口源码：https://github.com/mik3y/usb-serial-for-android
 
-## usb转串口源码：https://github.com/mik3y/usb-serial-for-android
+## android studio 引入，注意：usbserialport只实现了简单的读写，更深度化的使用可查看 [usb-serial-port-measure](MEASURE.md)
 
-## android studio 引入
-
- ```
+```
 dependencies {
       compile 'com.hd:usbserialport:0.1'
   }
@@ -25,7 +23,7 @@ public class AIOApp extends Application {
             DeviceMeasureController.INSTANCE.init(this,BuildConfig.DEBUG);
         }
   }
-  ```
+```
 ### 2.扫描设备
 ```
   DeviceMeasureController.INSTANCE.scanSerialPort();//扫描串口
@@ -166,5 +164,4 @@ DeviceMeasureController.INSTANCE.write()
 DeviceMeasureController.INSTANCE.stop()
 ```
 
-## 更多详细用法可参考sihealdevicelibrary
 

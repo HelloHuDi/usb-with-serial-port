@@ -14,6 +14,6 @@ public class AIOApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AIODeviceMeasure.INSTANCE.init(this, BuildConfig.DEBUG,new AIOComponentHandler());
+        AIODeviceMeasure.INSTANCE.init(this, BuildConfig.DEBUG, new AIOComponentHandler());
     }
 }
