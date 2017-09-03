@@ -1,10 +1,11 @@
 ### usb-serial-port-measure是对usbserialport的深度封装，力求用最少代码完成usb及串口设备的测量
 
-## android studio 引入(默认依赖usbserialport)：
+## android studio 引入：
 
 ```
 dependencies {
      compile 'com.hd:usb-serial-port-measure:0.1@aar'
+     compile 'com.hd:usbserialport:0.1'
   }
 ```
 
