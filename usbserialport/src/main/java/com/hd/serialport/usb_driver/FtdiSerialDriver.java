@@ -28,6 +28,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbRequest;
 import android.support.annotation.Keep;
 
+import com.hd.serialport.config.UsbPortDeviceType;
 import com.hd.serialport.utils.HexDump;
 import com.hd.serialport.utils.L;
 
@@ -85,6 +86,11 @@ import java.util.Map;
  */
 @Keep
 public class FtdiSerialDriver extends CommonUsbSerialDriver {
+
+    @Override
+    public UsbPortDeviceType getDeviceType() {
+        return UsbPortDeviceType.USB_FTD;
+    }
 
     /**
      * FTDI chip types.

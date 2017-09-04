@@ -12,7 +12,7 @@ import java.lang.reflect.Method
  */            
 object PreferenceUtil{
 
-    val FILE_NAME = "share_data"
+    val FILE_NAME = "usb_serial_port_measure_data"
 
     fun put(context: Context, key: String, any: Any) {
         val sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)

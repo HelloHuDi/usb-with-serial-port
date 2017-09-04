@@ -1,12 +1,14 @@
 package com.hd.usbserialport.sample
 
 import android.content.Context
+import com.aio.usbserialport.cache.UsbSerialPortCache
+import com.aio.usbserialport.config.AIOComponent
+import com.aio.usbserialport.device.Device
+import com.aio.usbserialport.listener.ReceiveResultListener
+import com.aio.usbserialport.parser.Parser
 import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.usb_driver.UsbSerialPort
-import com.aio.usbserialport.cache.UsbSerialPortCache
-import com.aio.usbserialport.config.AIOComponent
-import com.aio.usbserialport.parser.Parser
 
 
 /**
@@ -14,6 +16,10 @@ import com.aio.usbserialport.parser.Parser
  *
  */
 class AIOComponentHandler : AIOComponent {
+
+    override fun getOthersDevice(context: Context, type: Int, parser: Parser, listener: ReceiveResultListener): Device? {
+      return null
+    }
 
     /**
      * provide measure parameter[SerialPortMeasureParameter] or [com.hd.serialport.param.UsbMeasureParameter]

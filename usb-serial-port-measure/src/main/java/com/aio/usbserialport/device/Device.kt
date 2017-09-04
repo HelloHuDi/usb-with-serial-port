@@ -2,10 +2,6 @@ package com.aio.usbserialport.device
 
 import android.content.Context
 import android.os.SystemClock
-import com.hd.serialport.config.MeasureStatus
-import com.hd.serialport.method.DeviceMeasureController
-import com.hd.serialport.usb_driver.UsbSerialPort
-import com.hd.serialport.utils.L
 import com.aio.usbserialport.R
 import com.aio.usbserialport.config.AIOComponent
 import com.aio.usbserialport.listener.ReceiveResultListener
@@ -13,6 +9,10 @@ import com.aio.usbserialport.method.AIODeviceMeasure
 import com.aio.usbserialport.parser.DataPackageEntity
 import com.aio.usbserialport.parser.Parser
 import com.aio.usbserialport.result.ParserResult
+import com.hd.serialport.config.MeasureStatus
+import com.hd.serialport.method.DeviceMeasureController
+import com.hd.serialport.usb_driver.UsbSerialPort
+import com.hd.serialport.utils.L
 import java.io.OutputStream
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
@@ -37,6 +37,8 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
     protected var aioComponent: AIOComponent? = null
 
     protected abstract fun measure()
+
+    protected abstract fun release()
 
     /**
      * provide conditions might need
@@ -76,6 +78,7 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
         L.d("device stop:" + status)
         if (status == MeasureStatus.RUNNING) {
             status = MeasureStatus.STOPPING
+            release()
             DeviceMeasureController.write(releaseInstruct())
             SystemClock.sleep(10)
             DeviceMeasureController.stop()

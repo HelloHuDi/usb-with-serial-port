@@ -34,6 +34,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.support.annotation.Keep;
 
+import com.hd.serialport.config.UsbPortDeviceType;
 import com.hd.serialport.utils.L;
 
 import java.io.IOException;
@@ -49,6 +50,11 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
     public ProlificSerialDriver(UsbDevice device) {
         mDevice = device;
         mPort = new ProlificSerialPort(mDevice, 0);
+    }
+
+    @Override
+    public UsbPortDeviceType getDeviceType() {
+        return UsbPortDeviceType.USB_PL2303;
     }
 
     public class ProlificSerialPort extends CommonUsbSerialPort {
@@ -277,7 +283,7 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
                         L.INSTANCE.d("Method UsbDeviceConnection.getRawDescriptors, " + "required for PL2303 subtype detection, not " + "available! Assuming that it is a HX device");
                         mDeviceType = DEVICE_TYPE_HX;
                     } catch (Exception e) {
-                        L.INSTANCE.e(e+ "An unexpected exception occured while trying to detect PL2303 subtype");
+                        L.INSTANCE.e(e + "An unexpected exception occured while trying to detect PL2303 subtype");
                     }
                 }
 
@@ -286,9 +292,9 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
 
                 doBlackMagic();
                 opened = true;
-            }catch (Exception e){
-                L.INSTANCE.d("driver open error :"+e+"=="+opened);
-            }finally {
+            } catch (Exception e) {
+                L.INSTANCE.d("driver open error :" + e + "==" + opened);
+            } finally {
                 if (!opened) {
                     mConnection = null;
                     connection.releaseInterface(usbInterface);
@@ -308,7 +314,7 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
                         try {
                             mReadStatusThread.join();
                         } catch (Exception e) {
-                            L.INSTANCE.e("An error occured while waiting for status read thread:"+e);
+                            L.INSTANCE.e("An error occured while waiting for status read thread:" + e);
                         }
                     }
                 }
@@ -317,7 +323,7 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
                 try {
                     mConnection.releaseInterface(mDevice.getInterface(0));
                 } catch (Exception e) {
-                    L.INSTANCE.e("close error:"+e);
+                    L.INSTANCE.e("close error:" + e);
                 } finally {
                     mConnection = null;
                 }
@@ -332,7 +338,7 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
                 if (numBytesRead < 0) {
                     return 0;
                 }
-                L.INSTANCE.d("read len driver :"+numBytesRead+"=="+ Arrays.toString(mReadBuffer));
+                L.INSTANCE.d("read len driver :" + numBytesRead + "==" + Arrays.toString(mReadBuffer));
                 System.arraycopy(mReadBuffer, 0, dest, 0, numBytesRead);
                 return numBytesRead;
             }

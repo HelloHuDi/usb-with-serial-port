@@ -3,18 +3,19 @@ package com.aio.usbserialport.method
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
-import com.hd.serialport.config.MeasureStatus
-import com.hd.serialport.method.DeviceMeasureController
-import com.hd.serialport.param.MeasureParameter
-import com.hd.serialport.param.SerialPortMeasureParameter
-import com.hd.serialport.param.UsbMeasureParameter
-import com.hd.serialport.utils.L
 import com.aio.usbserialport.R
 import com.aio.usbserialport.config.AIOComponent
 import com.aio.usbserialport.device.Device
 import com.aio.usbserialport.device.SerialPortDevice
 import com.aio.usbserialport.device.UsbPortDevice
 import com.aio.usbserialport.listener.ReceiveResultListener
+import com.aio.usbserialport.parser.EmptyParser
+import com.hd.serialport.config.MeasureStatus
+import com.hd.serialport.method.DeviceMeasureController
+import com.hd.serialport.param.MeasureParameter
+import com.hd.serialport.param.SerialPortMeasureParameter
+import com.hd.serialport.param.UsbMeasureParameter
+import com.hd.serialport.utils.L
 
 /**
  * Created by hd on 2017/8/28 .
@@ -86,12 +87,14 @@ object AIODeviceMeasure {
     }
 
     private fun initDevice(): Device? {
+        val parser=aioComponent!!.getParser(aioDeviceType) ?: EmptyParser()
         if (parameter is SerialPortMeasureParameter) {
-            device = SerialPortDevice(context!!, aioDeviceType, parameter as SerialPortMeasureParameter,
-                    aioComponent!!.getParser(aioDeviceType)!!, listener!!)
+            device = SerialPortDevice(context!!, aioDeviceType, parameter as SerialPortMeasureParameter,parser, listener!!)
         } else if (parameter is UsbMeasureParameter) {
             device = UsbPortDevice(context!!, aioDeviceType, aioComponent!!.getUsbSerialPort(context!!, aioDeviceType),
-                    parameter as UsbMeasureParameter, aioComponent!!.getParser(aioDeviceType)!!, listener!!)
+                    parameter as UsbMeasureParameter, parser, listener!!)
+        }else {
+            device=aioComponent!!.getOthersDevice(context!!, aioDeviceType,parser, listener!!)
         }
         device?.addAIOComponent(aioComponent)
         device?.addCondition(t)

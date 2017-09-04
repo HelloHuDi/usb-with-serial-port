@@ -20,18 +20,19 @@ class UsbPortEngine(context: Context, val usbManager: UsbManager) : Engine(conte
         super.open(usbSerialPort, usbMeasureParameter, measureListener)
         try {
             val usbDevice = usbSerialPort.driver.device
-            if (RequestUsbPermission.newInstance().requestUsbPermission(context, usbManager, usbDevice)) {
-                measureListener.measureError(context.resources.getString(R.string.request_permission_failed))
+            if (!RequestUsbPermission.newInstance().requestUsbPermission(context, usbManager, usbDevice)) {
+                L.e("request usb permission failed :" + usbDevice)
                 return
             }
             val connection = usbManager.openDevice(usbDevice)
             if (connection != null) {
                 usbSerialPort.open(connection)
-                usbSerialPort.setParameters(usbMeasureParameter.baudRate, usbMeasureParameter.dataBits,usbMeasureParameter.stopBits, usbMeasureParameter.parity)
+                usbSerialPort.setParameters(usbMeasureParameter.baudRate, usbMeasureParameter.dataBits, usbMeasureParameter.stopBits, usbMeasureParameter.parity)
                 val usbReadWriteRunnable = UsbReadWriteRunnable(usbSerialPort, measureListener, this)
                 status = MeasureStatus.RUNNING
                 executor.submit(usbReadWriteRunnable)
                 readWriteRunnableList.add(usbReadWriteRunnable)
+                L.d("open usb device success")
             } else {
                 L.d("open device failure,connection is null")
                 measureListener.measureError(context.resources.getString(R.string.open_target_device_error))

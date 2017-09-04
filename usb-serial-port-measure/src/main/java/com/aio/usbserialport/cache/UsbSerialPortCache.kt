@@ -3,10 +3,10 @@ package com.aio.usbserialport.cache
 import android.content.Context
 import android.hardware.usb.UsbDevice
 import android.util.Base64
-import com.hd.serialport.usb_driver.*
-import com.hd.serialport.utils.L
 import com.aio.usbserialport.utils.ParcelableUtil
 import com.aio.usbserialport.utils.PreferenceUtil
+import com.hd.serialport.usb_driver.*
+import com.hd.serialport.utils.L
 
 /**
  * Created by hd on 2017/8/31 .
@@ -59,6 +59,16 @@ class UsbSerialPortCache constructor(val context: Context, val deviceType: Int) 
 
     fun removeAllCachePort() {
         PreferenceUtil.clear(context)
+    }
+
+    fun setUsbSerialPortCache(usbPort: UsbSerialPort?=null,usbDevice: UsbDevice?=null,serialPortPath: String?=null){
+        if(usbPort!=null){
+            setUsbPortCache(usbPort)
+        }else if(usbDevice!=null){
+            setUsbDeviceCache(usbDevice)
+        }else if(!serialPortPath.isNullOrEmpty()){
+            setSerialPortCache(serialPortPath!!)
+        }
     }
 
     fun setSerialPortCache(serialPortPath: String) {

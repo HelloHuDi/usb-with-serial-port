@@ -9,7 +9,7 @@ import com.hd.serialport.BuildConfig
  */
 object L {
     var allowLog = BuildConfig.DEBUG
-    private val TAG = "sihealdeviceLibrary"
+    private val TAG = "usb-serial-port"
     fun i(i: String) {
         i(TAG, i)
     }

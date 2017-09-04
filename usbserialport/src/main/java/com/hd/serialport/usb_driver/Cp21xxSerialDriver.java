@@ -28,6 +28,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.support.annotation.Keep;
 
+import com.hd.serialport.config.UsbPortDeviceType;
 import com.hd.serialport.utils.L;
 
 import java.io.IOException;
@@ -43,6 +44,12 @@ public class Cp21xxSerialDriver extends CommonUsbSerialDriver {
         mDevice = device;
         mPort = new Cp21xxSerialPort(mDevice, 0);
     }
+
+    @Override
+    public UsbPortDeviceType getDeviceType() {
+        return UsbPortDeviceType.USB_CP21xx;
+    }
+
     public class Cp21xxSerialPort extends CommonUsbSerialPort {
 
         private static final int DEFAULT_BAUD_RATE = 9600;

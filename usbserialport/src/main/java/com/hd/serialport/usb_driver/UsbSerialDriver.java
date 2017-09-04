@@ -23,6 +23,8 @@ package com.hd.serialport.usb_driver;
 
 import android.hardware.usb.UsbDevice;
 
+import com.hd.serialport.config.UsbPortDeviceType;
+
 import java.util.List;
 
 /**
@@ -45,4 +47,8 @@ public interface UsbSerialDriver {
      */
     public List<UsbSerialPort> getPorts();
 
+    /**
+     * @return usb port device type {@link UsbPortDeviceType}
+     */
+    public UsbPortDeviceType getDeviceType();
 }

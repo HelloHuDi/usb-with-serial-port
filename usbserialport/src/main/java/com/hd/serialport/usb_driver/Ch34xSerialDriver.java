@@ -27,6 +27,7 @@ import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.support.annotation.Keep;
 
+import com.hd.serialport.config.UsbPortDeviceType;
 import com.hd.serialport.utils.L;
 
 import java.io.IOException;
@@ -49,6 +50,12 @@ public class Ch34xSerialDriver extends CommonUsbSerialDriver {
         mDevice = device;
         mPort = new Ch340SerialPort(mDevice, 0);
     }
+
+    @Override
+    public UsbPortDeviceType getDeviceType() {
+        return UsbPortDeviceType.USB_CH34xx;
+    }
+
     public class Ch340SerialPort extends CommonUsbSerialPort {
 
         private static final int USB_TIMEOUT_MILLIS = 5000;
@@ -125,9 +132,9 @@ public class Ch34xSerialDriver extends CommonUsbSerialDriver {
                 for (int i = 0; i < mDevice.getInterfaceCount(); i++) {
                     UsbInterface usbIface = mDevice.getInterface(i);
                     if (mConnection.claimInterface(usbIface, true)) {
-                       L.INSTANCE.d("claimInterface " + i + " SUCCESS");
+                        L.INSTANCE.d("claimInterface " + i + " SUCCESS");
                     } else {
-                       L.INSTANCE.d("claimInterface " + i + " FAIL");
+                        L.INSTANCE.d("claimInterface " + i + " FAIL");
                     }
                 }
 
@@ -141,7 +148,7 @@ public class Ch34xSerialDriver extends CommonUsbSerialDriver {
                             mWriteEndpoint = ep;
                         }
                     } else {
-                       L.INSTANCE.d("ep.getType():" + ep.getType());
+                        L.INSTANCE.d("ep.getType():" + ep.getType());
                     }
                 }
 
@@ -175,7 +182,7 @@ public class Ch34xSerialDriver extends CommonUsbSerialDriver {
 
 
         @Override
-        public int read(byte[] dest, int timeoutMillis){
+        public int read(byte[] dest, int timeoutMillis) {
             final int numBytesRead;
             synchronized (mReadBufferLock) {
                 int readAmt = Math.min(dest.length, mReadBuffer.length);

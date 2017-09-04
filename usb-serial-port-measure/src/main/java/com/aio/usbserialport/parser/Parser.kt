@@ -1,10 +1,11 @@
 package com.aio.usbserialport.parser
 
+import com.aio.usbserialport.cache.UsbSerialPortCache
+import com.aio.usbserialport.device.Device
+import com.aio.usbserialport.result.ParserResult
 import com.hd.serialport.config.MeasureStatus
 import com.hd.serialport.usb_driver.UsbSerialPort
 import com.hd.serialport.utils.L
-import com.aio.usbserialport.device.Device
-import com.aio.usbserialport.result.ParserResult
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -78,6 +79,7 @@ abstract class Parser {
 
     private fun saveDevice() {
         L.d("save device :"+device?.aioDeviceType+"="+port+"="+devicePath)
+        UsbSerialPortCache.newInstance(device!!.context,device!!.aioDeviceType).setUsbSerialPortCache(usbPort=port,serialPortPath = devicePath)
     }
 
     private fun clear() {

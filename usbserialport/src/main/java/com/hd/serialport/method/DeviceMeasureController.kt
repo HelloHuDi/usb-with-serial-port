@@ -69,7 +69,8 @@ object DeviceMeasureController {
 
     fun measure(usbSerialDriverList: List<UsbSerialDriver>?, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
         if (usbSerialDriverList != null) {
-            usbSerialDriverList.filter { it.ports[0] != null }.forEach { measure(it.ports[0], usbMeasureParameter, usbMeasureListener) }
+            usbSerialDriverList.filter { it.deviceType == usbMeasureParameter.usbPortDeviceType || usbMeasureParameter.usbPortDeviceType==UsbPortDeviceType.USB_OTHERS }
+                    .filter { it.ports[0] != null }.forEach { measure(it.ports[0], usbMeasureParameter, usbMeasureListener) }
         } else {
             measure(scanUsbPort(), usbMeasureParameter, usbMeasureListener)
         }
@@ -106,7 +107,7 @@ object DeviceMeasureController {
         }
     }
 
-    fun write(data:List<ByteArray>?) {
+    fun write(data: List<ByteArray>?) {
         if (usbPortMeasure)
             usbPortEngine?.write(data)
         if (serialPortMeasure)
