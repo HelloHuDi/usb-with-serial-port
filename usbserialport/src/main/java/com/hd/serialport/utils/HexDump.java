@@ -16,11 +16,69 @@
 
 package com.hd.serialport.utils;
 
+import java.util.Arrays;
+
 /**
  * Clone of Android's HexDump class, for use in debugging. Cosmetic changes only.
  */
 public class HexDump {
     private final static char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+    private final static String[] binaryArray = {"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"};
+    private final static String hexStr= Arrays.toString(HEX_DIGITS);
+    public static String dumpHexString(byte[] array) {
+        return dumpHexString(array, 0, array.length);
+    }
+
+    public static String dumpHexString(byte[] array, int offset, int length) {
+        StringBuilder result = new StringBuilder();
+        byte[] line = new byte[16];
+        int lineIndex = 0;
+        result.append("\n0x");
+        result.append(toHexString(offset));
+
+        for (int i = offset; i < offset + length; i++) {
+            if (lineIndex == 16) {
+                result.append(" ");
+
+                for (int j = 0; j < 16; j++) {
+                    if (line[j] > ' ' && line[j] < '~') {
+                        result.append(new String(line, j, 1));
+                    } else {
+                        result.append(".");
+                    }
+                }
+
+                result.append("\n0x");
+                result.append(toHexString(i));
+                lineIndex = 0;
+            }
+
+            byte b = array[i];
+            result.append(" ");
+            result.append(HEX_DIGITS[(b >>> 4) & 0x0F]);
+            result.append(HEX_DIGITS[b & 0x0F]);
+
+            line[lineIndex++] = b;
+        }
+
+        if (lineIndex != 16) {
+            int count = (16 - lineIndex) * 3;
+            count++;
+            for (int i = 0; i < count; i++) {
+                result.append(" ");
+            }
+
+            for (int i = 0; i < lineIndex; i++) {
+                if (line[i] > ' ' && line[i] < '~') {
+                    result.append(new String(line, i, 1));
+                } else {
+                    result.append(".");
+                }
+            }
+        }
+
+        return result.toString();
+    }
 
     public static String hextoString(byte[] array) {
         return hextoString(array, 0, array.length);
@@ -123,8 +181,54 @@ public class HexDump {
         for (int i = 0; i < length; i += 2) {
             buffer[i / 2] = (byte) ((toByte(hexString.charAt(i)) << 4) | toByte(hexString.charAt(i + 1)));
         }
-
         return buffer;
+    }
+
+    /**
+     * @param hexString
+     *
+     * @return 将十六进制转换为二进制字符串   16-2
+     */
+    public static String hexStrBinaryStr(String hexString) {
+        return bytes2BinStr(hexStrToBinary(hexString));
+    }
+
+    /**
+     * @param hexString
+     *
+     * @return 将十六进制转换为二进制字节数组   16-2
+     */
+    public static byte[] hexStrToBinary(String hexString){
+        //hexString的长度对2取整，作为bytes的长度
+        int len = hexString.length() / 2;
+        byte[] bytes = new byte[len];
+        byte high = 0;//字节高四位
+        byte low = 0;//字节低四位
+        for (int i = 0; i < len; i++) {
+            //右移四位得到高位
+            high = (byte)((hexStr.indexOf(hexString.charAt(2*i)))<<4);
+            low = (byte)hexStr.indexOf(hexString.charAt(2*i+1));
+            bytes[i] = (byte) (high | low);//高地位做或运算
+        }
+        return bytes;
+    }
+
+
+    /**
+     * @return 二进制数组转换为二进制字符串   2-2
+     */
+    public static String bytes2BinStr(byte[] bArray) {
+        String outStr = "";
+        int pos = 0;
+        for (byte b : bArray) {
+            //高四位
+            pos = (b & 0xF0) >> 4;
+            outStr += binaryArray[pos];
+            //低四位
+            pos = b & 0x0F;
+            outStr += binaryArray[pos];
+        }
+        return outStr;
     }
 
     /**
