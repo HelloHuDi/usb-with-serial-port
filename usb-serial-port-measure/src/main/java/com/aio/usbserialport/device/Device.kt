@@ -80,7 +80,7 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
             status = MeasureStatus.STOPPING
             release()
             DeviceMeasureController.write(releaseInstruct())
-            SystemClock.sleep(10)
+            SystemClock.sleep(100)
             DeviceMeasureController.stop()
             dataQueue.clear()
             outputStreamList.clear()

@@ -38,6 +38,7 @@ class UsbPortEngine(context: Context, val usbManager: UsbManager) : Engine(conte
                 measureListener.measureError(context.resources.getString(R.string.open_target_device_error))
             }
         } catch (ignored: Exception) {
+            L.e("open device failure :"+ignored)
             measureListener.measureError(context.resources.getString(R.string.open_target_device_error))
         }
     }

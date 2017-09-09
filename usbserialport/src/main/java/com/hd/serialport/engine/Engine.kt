@@ -36,7 +36,6 @@ abstract class Engine(val context: Context) {
         status = MeasureStatus.STOPPED
         L.d("Engine executor stop ?" + executor.isShutdown+"=" + status + "=" + readWriteRunnableList.size)
         readWriteRunnableList.forEach { it.stop() }
-        executor.shutdownNow()
         readWriteRunnableList.clear()
     }
 
