@@ -7,7 +7,7 @@ def siteUrl = 'https://github.com/HelloHuDi/usb-with-serial-port'
 def gitUrl = 'https://github.com/HelloHuDi/usb-with-serial-port.git'
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-version = "0.2.0"
+version = "0.2.1"
 group = "com.hd"
 
 android {
