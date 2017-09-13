@@ -71,13 +71,13 @@ abstract class Parser {
 
     fun complete(result: ParserResult, stop: Boolean) {
         device?.complete(result, stop)
+        saveDevice()
         if (stop){
             clear()
-            saveDevice()
         }
     }
 
-    private fun saveDevice() {
+    open fun saveDevice() {
         L.d("save device :"+device!!.context+"="+device?.aioDeviceType+"="+port+"="+devicePath)
         UsbSerialPortCache.newInstance(device!!.context,device!!.aioDeviceType).setUsbSerialPortCache(usbPort=port,serialPortPath = devicePath)
     }
