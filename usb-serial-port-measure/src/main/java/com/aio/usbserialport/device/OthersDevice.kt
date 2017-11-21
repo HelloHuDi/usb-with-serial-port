@@ -1,23 +1,20 @@
 package com.aio.usbserialport.device
 
 import android.content.Context
-import com.aio.usbserialport.listener.ReceiveResultListener
 import com.aio.usbserialport.parser.Parser
+import kotlin.concurrent.thread
 
 
 /**
  * Created by hd on 2017/9/4 .
  * others unknown device
  */
-open class OthersDevice(context: Context, aioDeviceType:Int,parser: Parser, listener: ReceiveResultListener)
-    : Device(context,aioDeviceType, parser, listener){
+abstract class OthersDevice(context: Context, aioDeviceType:Int,parser: Parser)
+    : Device(context,aioDeviceType, parser){
+
+    abstract fun asyncMeasure()
 
     override fun measure() {
-
+        thread { asyncMeasure() }
     }
-
-    override fun release() {
-
-    }
-
 }

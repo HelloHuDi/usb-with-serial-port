@@ -2,7 +2,6 @@ package com.aio.usbserialport.config
 
 import android.content.Context
 import com.aio.usbserialport.device.Device
-import com.aio.usbserialport.listener.ReceiveResultListener
 import com.aio.usbserialport.parser.Parser
 import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
@@ -18,7 +17,7 @@ interface AIOComponent {
     /**
      * allow extension others object of 'Device' [com.aio.usbserialport.device.OthersDevice]
      */
-    fun getOthersDevice(context: Context, type:Int,parser: Parser, listener: ReceiveResultListener): Device?
+    fun getOthersDevice(context: Context, type:Int,parser: Parser): Device?
 
     /**
      * provide measure parameter[SerialPortMeasureParameter] or [com.hd.serialport.param.UsbMeasureParameter]

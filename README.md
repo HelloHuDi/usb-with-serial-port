@@ -8,7 +8,7 @@
 
 ```
 dependencies {
-      compile 'com.hd:usbserialport:0.2.0'
+      compile 'com.hd:usbserialport:0.2.1'
   }
 ```
 
@@ -20,7 +20,7 @@ public class AIOApp extends Application {
         @Override
         public void onCreate() {
             super.onCreate();
-            DeviceMeasureController.INSTANCE.init(this,BuildConfig.DEBUG);
+            DeviceMeasureController.init(this,BuildConfig.DEBUG);
         }
   }
 ```

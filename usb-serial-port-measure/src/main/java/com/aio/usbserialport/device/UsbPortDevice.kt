@@ -1,20 +1,20 @@
 package com.aio.usbserialport.device
 
 import android.content.Context
-import com.aio.usbserialport.listener.ReceiveResultListener
 import com.aio.usbserialport.parser.DataPackageEntity
 import com.aio.usbserialport.parser.Parser
 import com.hd.serialport.listener.UsbMeasureListener
 import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.param.UsbMeasureParameter
 import com.hd.serialport.usb_driver.UsbSerialPort
+import java.util.*
 
 /**
  * Created by hd on 2017/8/28 .
  *
  */
-open class UsbPortDevice(context: Context,aioDeviceType:Int, val port: UsbSerialPort? = null,val parameter: UsbMeasureParameter, parser: Parser, listener: ReceiveResultListener)
-    : Device(context,aioDeviceType, parser, listener), UsbMeasureListener {
+open class UsbPortDevice(context: Context,aioDeviceType:Int, val port: UsbSerialPort? = null,val parameter: UsbMeasureParameter, parser: Parser)
+    : Device(context,aioDeviceType, parser), UsbMeasureListener {
 
     override fun write(usbSerialPort: UsbSerialPort) {
         usbSerialPortList.add(usbSerialPort)
@@ -33,6 +33,7 @@ open class UsbPortDevice(context: Context,aioDeviceType:Int, val port: UsbSerial
 
     override fun measuring(usbSerialPort: UsbSerialPort, data: ByteArray) {
         dataQueue.put(DataPackageEntity(port = usbSerialPort, data = data))
+        addLogcat(Arrays.toString(data))
     }
 
 }

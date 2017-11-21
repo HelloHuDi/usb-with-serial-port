@@ -30,7 +30,7 @@ class UsbPortEngine(context: Context, val usbManager: UsbManager) : Engine(conte
                 usbSerialPort.setParameters(usbMeasureParameter.baudRate, usbMeasureParameter.dataBits, usbMeasureParameter.stopBits, usbMeasureParameter.parity)
                 val usbReadWriteRunnable = UsbReadWriteRunnable(usbSerialPort, measureListener, this)
                 status = MeasureStatus.RUNNING
-                executor.submit(usbReadWriteRunnable)
+                Engine.Companion.submit(usbReadWriteRunnable)
                 readWriteRunnableList.add(usbReadWriteRunnable)
                 L.d("open usb device success")
             } else {

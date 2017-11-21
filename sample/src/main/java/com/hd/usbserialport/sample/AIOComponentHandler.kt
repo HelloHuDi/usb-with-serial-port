@@ -4,7 +4,6 @@ import android.content.Context
 import com.aio.usbserialport.cache.UsbSerialPortCache
 import com.aio.usbserialport.config.AIOComponent
 import com.aio.usbserialport.device.Device
-import com.aio.usbserialport.listener.ReceiveResultListener
 import com.aio.usbserialport.parser.Parser
 import com.hd.serialport.param.MeasureParameter
 import com.hd.serialport.param.SerialPortMeasureParameter
@@ -17,8 +16,8 @@ import com.hd.serialport.usb_driver.UsbSerialPort
  */
 class AIOComponentHandler : AIOComponent {
 
-    override fun getOthersDevice(context: Context, type: Int, parser: Parser, listener: ReceiveResultListener): Device? {
-      return null
+    override fun getOthersDevice(context: Context, type: Int, parser: Parser): Device? {
+        return null
     }
 
     /**

@@ -6,6 +6,7 @@ import com.aio.usbserialport.result.ParserResult
 import com.hd.serialport.config.MeasureStatus
 import com.hd.serialport.usb_driver.UsbSerialPort
 import com.hd.serialport.utils.L
+import java.nio.BufferOverflowException
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -40,18 +41,25 @@ abstract class Parser {
 
     private fun writing(device: Device) {
         while (device.status == MeasureStatus.RUNNING && !writeComplete.get()) {
-             asyncWrite()
+            asyncWrite()
         }
         L.d("writing thread stop :"+device.status+"="+writeComplete.get())
     }
 
     private fun reading(device: Device) {
         while (device.status == MeasureStatus.RUNNING) {
-            val entity = device.dataQueue.take()
-            port = entity.port
-            devicePath = entity.path
-            buffer.put(entity.data)
-            parser(entity.data)
+            try {
+                val entity = device.dataQueue.take()
+                port = entity.port
+                devicePath = entity.path
+                buffer.put(entity.data)
+                parser(entity.data)
+            }catch (ignored: BufferOverflowException){
+                buffer.clear()
+                L.e("parser BufferOverflowException")
+            }catch (e:Exception){
+                L.e("parser unknown Exception:"+e)
+            }
         }
         L.d("reading thread stop")
     }
@@ -70,11 +78,11 @@ abstract class Parser {
     }
 
     fun complete(result: ParserResult, stop: Boolean) {
-        device?.complete(result, stop)
-        saveDevice()
         if (stop){
             clear()
+            saveDevice()
         }
+        device?.complete(result, stop)
     }
 
     open fun saveDevice() {

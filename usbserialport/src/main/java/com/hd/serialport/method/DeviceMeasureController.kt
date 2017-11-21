@@ -88,7 +88,7 @@ object DeviceMeasureController {
     fun measure(paths: Array<String>?, serialPortMeasureParameter: SerialPortMeasureParameter, serialPortMeasureListener: SerialPortMeasureListener) {
         if (paths != null) {
             for (path in paths) {
-                if (!path.isNullOrEmpty()) {
+                if (!path.isEmpty()) {
                     serialPortMeasureParameter.devicePath = path
                     measure(serialPortMeasureParameter, serialPortMeasureListener)
                 }
