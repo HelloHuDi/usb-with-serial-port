@@ -15,8 +15,10 @@ import com.hd.serialport.utils.L
  * Created by hd on 2017/8/22 .
  *
  */
-class UsbPortEngine(context: Context, val usbManager: UsbManager) : Engine(context) {
-    override fun open(usbSerialPort: UsbSerialPort, usbMeasureParameter: UsbMeasureParameter, measureListener: UsbMeasureListener) {
+class UsbPortEngine(context: Context, private val usbManager: UsbManager) : Engine(context) {
+
+    override fun open(usbSerialPort: UsbSerialPort, usbMeasureParameter: UsbMeasureParameter,
+                      measureListener: UsbMeasureListener) {
         super.open(usbSerialPort, usbMeasureParameter, measureListener)
         try {
             val usbDevice = usbSerialPort.driver.device
@@ -27,11 +29,11 @@ class UsbPortEngine(context: Context, val usbManager: UsbManager) : Engine(conte
             val connection = usbManager.openDevice(usbDevice)
             if (connection != null) {
                 usbSerialPort.open(connection)
+                L.d("Parameter ："+usbMeasureParameter.toString())
                 usbSerialPort.setParameters(usbMeasureParameter.baudRate, usbMeasureParameter.dataBits, usbMeasureParameter.stopBits, usbMeasureParameter.parity)
                 val usbReadWriteRunnable = UsbReadWriteRunnable(usbSerialPort, measureListener, this)
                 status = MeasureStatus.RUNNING
-                Engine.Companion.submit(usbReadWriteRunnable)
-                readWriteRunnableList.add(usbReadWriteRunnable)
+                submit(usbReadWriteRunnable)
                 L.d("open usb device success")
             } else {
                 L.d("open device failure,connection is null")

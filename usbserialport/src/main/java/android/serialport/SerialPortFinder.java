@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,14 +40,21 @@ public class SerialPortFinder {
 		Vector<File> getDevices() {
 			if (mDevices == null) {
 				mDevices = new Vector<>();
-				File dev = new File("/dev");
+				String targetStr="/dev";
+				File dev = new File(targetStr);
 				File[] files = dev.listFiles();
-				int i;
-				for (i=0; i<files.length; i++) {
-					if (files[i].getAbsolutePath().startsWith(mDeviceRoot)) {
-						Log.d(TAG, "Found new device: " + files[i]);
-						mDevices.add(files[i]);
+				if (files != null) {
+					Log.d("tag", "dev :" + dev + "==" + Arrays.toString(files));
+					for (File file : files) {
+						if (file.getAbsolutePath().startsWith(mDeviceRoot)) {
+							Log.d(TAG, "Found new device: " + file);
+							mDevices.add(file);
+						}
 					}
+				} else if (mDeviceRoot.startsWith(targetStr)) {
+					File file = new File(mDeviceRoot);
+					Log.d(TAG, "Found new device: " + file);
+					mDevices.add(file);
 				}
 			}
 			return mDevices;

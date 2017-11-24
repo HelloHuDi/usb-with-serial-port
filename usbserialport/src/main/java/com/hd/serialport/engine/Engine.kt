@@ -19,22 +19,16 @@ import java.util.concurrent.Executors
  */
 abstract class Engine(val context: Context) {
 
-    companion object {
+    private val executor: ExecutorService = Executors.newCachedThreadPool()
 
-        private val executor: ExecutorService = Executors.newCachedThreadPool()
-
-        fun submit(runnable: Runnable){
-            executor.submit(runnable)
-        }
-
-        fun close(){
-            if(!executor.isShutdown) executor.shutdown()
-        }
+    fun submit(runnable: ReadWriteRunnable) {
+        readWriteRunnableList.add(runnable)
+        executor.submit(runnable)
     }
 
     var status: MeasureStatus = MeasureStatus.PREPARE
 
-    val readWriteRunnableList = arrayListOf<ReadWriteRunnable>()
+    private val readWriteRunnableList = arrayListOf<ReadWriteRunnable>()
 
     fun write(data: List<ByteArray>?) {
         if (data != null && data.isNotEmpty())
@@ -45,10 +39,9 @@ abstract class Engine(val context: Context) {
 
     fun stop() {
         status = MeasureStatus.STOPPED
-        L.d("Engine executor stop ?" + executor.isShutdown + "=" + status + "=" + readWriteRunnableList.size)
+        L.d("Engine executor stop ?" + status + "=" + readWriteRunnableList.size)
         readWriteRunnableList.forEach { it.stop() }
         readWriteRunnableList.clear()
-        close()
     }
 
     open fun open(usbSerialPort: UsbSerialPort, usbMeasureParameter: UsbMeasureParameter, measureListener: UsbMeasureListener) {}

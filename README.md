@@ -8,7 +8,7 @@
 
 ```
 dependencies {
-      compile 'com.hd:usbserialport:0.2.1'
+      compile 'com.hd:usbserialport:0.2.2'
   }
 ```
 

@@ -46,6 +46,7 @@ abstract class ReadWriteRunnable(val context: Context, val measureListener: Meas
             status = MeasureStatus.STOPPING
             readBuffer.clear()
             writeBuffer.clear()
+            close()
             status = MeasureStatus.STOPPED
             L.d("read-write runnable stop 2 :" + status)
         }

@@ -27,8 +27,7 @@ class SerialPortEngine(context: Context) : Engine(context) {
             val serialPort = SerialPort(File(parameter.devicePath), parameter.baudRate, parameter.flags)
             status = MeasureStatus.RUNNING
             val serialPortReadWriteRunnable = SerialPortReadWriteRunnable(parameter.devicePath!!,serialPort, measureListener, this)
-            Engine.Companion.submit(serialPortReadWriteRunnable)
-            readWriteRunnableList.add(serialPortReadWriteRunnable)
+            submit(serialPortReadWriteRunnable)
         } catch (e: SecurityException) {
             measureListener.measureError(context.resources.getString(R.string.error_security))
         } catch (e: IOException) {
