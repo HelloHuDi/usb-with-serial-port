@@ -1,10 +1,8 @@
 ## 使用kotlin编写，提供android系统下usb转串口及串口(UART,RS232)通信方式
 
-## 参考串口通信源码： https://github.com/cepr/android-serialport-api
-
-## 参考usb转串口源码：https://github.com/mik3y/usb-serial-for-android
-
-## usb转串口及串口设备测试工具：https://github.com/HelloHuDi/usbSerialPortTools
+## [参考串口通信源码](https://github.com/cepr/android-serialport-api)
+## [参考usb转串口源码](https://github.com/mik3y/usb-serial-for-android)
+## [usb转串口及串口设备测试工具](https://github.com/HelloHuDi/usbSerialPortTools)
 
 ## android studio 引入，注意：usbserialport只实现了简单的读写，更深度化的使用可查看 [usb-serial-port-measure](MEASURE.md)
 
