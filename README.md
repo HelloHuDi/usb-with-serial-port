@@ -2,15 +2,17 @@
 
 ## [参考串口通信源码](https://github.com/cepr/android-serialport-api)
 ## [参考usb转串口源码](https://github.com/mik3y/usb-serial-for-android)
-## [usb转串口及串口设备测试工具](https://github.com/HelloHuDi/usbSerialPortTools),[apk下载](https://raw.githubusercontent.com/HelloHuDi/usbSerialPortTools/master/app-release.apk)
+## [usb转串口及串口设备测试工具工程](https://github.com/HelloHuDi/usbSerialPortTools)
+## [测试工具apk下载](https://raw.githubusercontent.com/HelloHuDi/usbSerialPortTools/master/app-release.apk)
 
-## android studio 引入，注意：usbserialport只实现了简单的读写，更深度化的使用可查看 [usb-serial-port-measure](MEASURE.md)
+## android studio 引入 
 
 ```
 dependencies {
       compile 'com.hd:usbserialport:0.2.2'
   }
 ```
+## 注意：usbserialport只实现了简单的读写，更深度化的使用可查看 [usb-serial-port-measure](MEASURE.md)
 
 ## 用法：
 
