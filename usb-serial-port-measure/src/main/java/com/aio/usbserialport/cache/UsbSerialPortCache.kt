@@ -88,16 +88,12 @@ class UsbSerialPortCache constructor(val context: Context, val deviceType: Int) 
     fun setUsbPortCache(usbPort: UsbSerialPort) {
         val usbDevice = usbPort.driver.device
         var usb_type = 0//UsbPortDeviceType.USB_OTHERS
-        if (usbPort is CdcAcmSerialDriver.CdcAcmSerialPort) {
-            usb_type = 1//UsbPortDeviceType.USB_CDC_ACM
-        } else if (usbPort is Cp21xxSerialDriver.Cp21xxSerialPort) {
-            usb_type = 2//UsbPortDeviceType.USB_CP21xx
-        } else if (usbPort is FtdiSerialDriver.FtdiSerialPort) {
-            usb_type = 3//UsbPortDeviceType.USB_FTD
-        } else if (usbPort is ProlificSerialDriver.ProlificSerialPort) {
-            usb_type = 4//UsbPortDeviceType.USB_PL2303
-        } else if (usbPort is Ch34xSerialDriver.Ch340SerialPort) {
-            usb_type = 5//UsbPortDeviceType.USB_CH34xx
+        when (usbPort) {
+            is CdcAcmSerialDriver.CdcAcmSerialPort -> usb_type = 1//UsbPortDeviceType.USB_CDC_ACM
+            is Cp21xxSerialDriver.Cp21xxSerialPort -> usb_type = 2//UsbPortDeviceType.USB_CP21xx
+            is FtdiSerialDriver.FtdiSerialPort -> usb_type = 3//UsbPortDeviceType.USB_FTD
+            is ProlificSerialDriver.ProlificSerialPort -> usb_type = 4//UsbPortDeviceType.USB_PL2303
+            is Ch34xSerialDriver.Ch340SerialPort -> usb_type = 5//UsbPortDeviceType.USB_CH34xx
         }
         PreferenceUtil.put(context, deviceType.toString()+usbPort_Name, usb_type)
         setUsbDeviceCache(usbDevice)

@@ -13,7 +13,7 @@ import com.hd.serialport.utils.L
 
 /**
  * Created by hd on 2017/8/22 .
- *
+ * usb-port engine
  */
 class UsbPortEngine(context: Context, private val usbManager: UsbManager) : Engine(context) {
 
@@ -23,7 +23,7 @@ class UsbPortEngine(context: Context, private val usbManager: UsbManager) : Engi
         try {
             val usbDevice = usbSerialPort.driver.device
             if (!RequestUsbPermission.newInstance().requestUsbPermission(context, usbManager, usbDevice)) {
-                L.e("request usb permission failed :" + usbDevice)
+                L.e("request usb permission failed :$usbDevice")
                 return
             }
             val connection = usbManager.openDevice(usbDevice)
@@ -40,7 +40,7 @@ class UsbPortEngine(context: Context, private val usbManager: UsbManager) : Engi
                 measureListener.measureError(context.resources.getString(R.string.open_target_device_error))
             }
         } catch (ignored: Exception) {
-            L.e("open device failure :"+ignored)
+            L.e("open device failure :$ignored")
             measureListener.measureError(context.resources.getString(R.string.open_target_device_error))
         }
     }

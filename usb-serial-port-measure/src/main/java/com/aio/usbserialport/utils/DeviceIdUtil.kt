@@ -44,7 +44,7 @@ class DeviceIdUtil private constructor(private val context: Context) {
         }
 
     private fun formatEmptyString(str: String?): String {
-        L.d("get device's id :" + str)
+        L.d("get device's id :$str")
         return if (str == null || str.isEmpty()) DEFAULT_NAME else str
     }
 

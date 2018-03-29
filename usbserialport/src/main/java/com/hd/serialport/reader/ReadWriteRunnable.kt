@@ -41,14 +41,14 @@ abstract class ReadWriteRunnable(val context: Context, val measureListener: Meas
     }
 
     fun stop() {
-        L.d("read-write runnable stop 1 :" + status)
+        L.d("read-write runnable stop 1 :$status")
         if (status != MeasureStatus.STOPPED || status != MeasureStatus.STOPPING) {
             status = MeasureStatus.STOPPING
             readBuffer.clear()
             writeBuffer.clear()
             close()
             status = MeasureStatus.STOPPED
-            L.d("read-write runnable stop 2 :" + status)
+            L.d("read-write runnable stop 2 :$status")
         }
     }
 
@@ -63,12 +63,12 @@ abstract class ReadWriteRunnable(val context: Context, val measureListener: Meas
             try {
                 reading()
             } catch (ignored: Exception) {
-                L.d("reading into port error :" + ignored)
+                L.d("reading into port error :$ignored")
                 measureListener.measureError(context.resources.getString(R.string.measure_target_device_error))
                 try {
                     close()
                 } catch (ignored: Exception) {
-                    L.d("close error :" + ignored)
+                    L.d("close error :$ignored")
                 }
                 status = MeasureStatus.STOPPED
                 break

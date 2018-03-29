@@ -25,15 +25,15 @@ object SystemSecurity {
      * @return return true if the current system security's support usb devices
      */
     fun check(context: Context): Boolean {
-        try {
+        return try {
             val usbManager = context.applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
             val deviceList = usbManager.deviceList
             for (usbDevice in deviceList.values)
                 usbDevice.getInterface(0)
-            return true
+            true
         } catch (e: Exception) {
-            L.d("TAG", "There are errors in the current system usb module :" + e)
-            return false
+            L.d("TAG", "There are errors in the current system usb module :$e")
+            false
         }
     }
 }

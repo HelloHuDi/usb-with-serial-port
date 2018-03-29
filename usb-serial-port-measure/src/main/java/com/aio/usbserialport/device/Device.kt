@@ -48,7 +48,7 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
     protected abstract fun release()
 
     protected fun addLogcat(msg: String) {
-        logcatListener?.logcat("logcat data :" + msg)
+        logcatListener?.logcat("logcat data :$msg")
         L.d(msg)
     }
 
@@ -104,7 +104,7 @@ abstract class Device(val context: Context, val aioDeviceType: Int, val parser: 
     }
 
     fun stopMeasure() {
-        L.d("device stop:" + status)
+        L.d("device stop:$status")
         if (status == MeasureStatus.RUNNING) {
             status = MeasureStatus.STOPPING
             single = true

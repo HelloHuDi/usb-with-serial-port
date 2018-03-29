@@ -32,6 +32,16 @@ class SerialPortReadWriteRunnable(val devicePath:String,val serialPort: SerialPo
     }
 
     override fun close() {
+        try {
+            serialPort.outputStream?.close()
+        } catch (e: Exception) {
+
+        }
+        try {
+            serialPort.inputStream?.close()
+        }catch (e :Exception){
+
+        }
     }
 
 }

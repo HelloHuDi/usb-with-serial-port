@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.usb.UsbDevice
 import android.hardware.usb.UsbManager
-import android.widget.Toast
 import com.hd.serialport.utils.L
 
 /**
@@ -13,19 +12,14 @@ import com.hd.serialport.utils.L
  * request permission at midway equipment access
  */
 class RequestPermissionBroadCastReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             UsbManager.ACTION_USB_DEVICE_ATTACHED -> {
-                ToastMore(context,"注意：有设备接入!")
                 val usbDevice = intent.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE)
-                L.d("midway equipment access :" + usbDevice)
-                RequestUsbPermission.newInstance().requestUsbPermission(context, null, usbDevice)
+                L.d("Note: midway equipment access ===> $usbDevice")
             }
-            UsbManager.ACTION_USB_DEVICE_DETACHED -> ToastMore(context,"注意：有设备移除!")
+            UsbManager.ACTION_USB_DEVICE_DETACHED ->  L.d("Note: there is a device to be removed!")
         }
-    }
-
-    fun ToastMore(context:Context,str:String){
-        Toast.makeText(context,str,Toast.LENGTH_SHORT).show()
     }
 }

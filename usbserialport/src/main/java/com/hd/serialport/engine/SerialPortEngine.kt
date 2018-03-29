@@ -14,9 +14,10 @@ import java.security.InvalidParameterException
 
 /**
  * Created by hd on 2017/8/27 .
- *
+ * serial-port engine
  */
 class SerialPortEngine(context: Context) : Engine(context) {
+
     override fun open(parameter: SerialPortMeasureParameter, measureListener: SerialPortMeasureListener) {
         super.open(parameter, measureListener)
         if (parameter.devicePath == null || parameter.devicePath!!.isEmpty()) {

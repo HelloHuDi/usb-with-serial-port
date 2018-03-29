@@ -11,11 +11,11 @@ version = "0.2.2"
 group = "com.hd"*/
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.android_compileSdkVersion
+    buildToolsVersion rootProject.android_buildToolsVersion
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 22
+        minSdkVersion rootProject.android_minSdkVersion
+        targetSdkVersion rootProject.android_targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -38,10 +38,10 @@ android {
 
 
 dependencies {
-    compile fileTree(include: '*.jar', dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile 'com.android.support:support-annotations:25.1.0'
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation lib_annotations
 }
 /*
 

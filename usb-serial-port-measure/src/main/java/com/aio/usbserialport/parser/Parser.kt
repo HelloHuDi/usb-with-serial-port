@@ -58,7 +58,7 @@ abstract class Parser {
                 buffer.clear()
                 L.e("parser BufferOverflowException")
             }catch (e:Exception){
-                L.e("parser unknown Exception:"+e)
+                L.e("parser unknown Exception:$e")
             }
         }
         L.d("reading thread stop")

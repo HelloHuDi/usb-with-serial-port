@@ -87,7 +87,7 @@ object AIODeviceMeasure {
      */
     fun addCondition(t: List<Any>): AIODeviceMeasure {
         val par = mutableMapOf<Int, List<Any>>()
-        par.put(0, t)
+        par[0] = t
         return addCondition(par)
     }
 
@@ -95,7 +95,7 @@ object AIODeviceMeasure {
      * add multiple detection condition
      */
     fun addCondition(mapT: Map<Int, List<Any>>): AIODeviceMeasure {
-        mapT.forEach { AIODeviceMeasure.t.put(it.key, it.value) }
+        mapT.forEach { AIODeviceMeasure.t[it.key] = it.value }
         L.d("condition : " + mapT + "=" + mapT.size + "=" + AIODeviceMeasure.t.size)
         return this
     }
@@ -140,18 +140,18 @@ object AIODeviceMeasure {
      * query the device according to type
      */
     fun getDevice(aioDeviceType: Int): Device? {
-        if (deviceMap.containsKey(aioDeviceType))
-            return deviceMap[aioDeviceType]
-        else return null
+        return if (deviceMap.containsKey(aioDeviceType))
+            deviceMap[aioDeviceType]
+        else null
     }
 
     /**
      * query the parser according to type
      */
     fun getParser(aioDeviceType: Int): Parser? {
-        if (parserMap.containsKey(aioDeviceType))
-            return parserMap[aioDeviceType]
-        else return null
+        return if (parserMap.containsKey(aioDeviceType))
+            parserMap[aioDeviceType]
+        else null
     }
 
     private fun initDevice(aioDeviceType: Int, listener: ReceiveResultListener, logcatListener: LogcatListener?) {
@@ -159,20 +159,18 @@ object AIODeviceMeasure {
         if (single)
             stopMeasure()
         val parser = aioComponent!!.getParser(aioDeviceType) ?: EmptyParser()
-        parserMap.put(aioDeviceType, parser)
+        parserMap[aioDeviceType] = parser
         val parameter = aioComponent!!.getMeasureParameter(context!!, aioDeviceType)
         val device: Device?
-        if (parameter is SerialPortMeasureParameter) {
-            device = SerialPortDevice(context!!, aioDeviceType, parameter, parser)
-        } else if (parameter is UsbMeasureParameter) {
-            device = UsbPortDevice(context!!, aioDeviceType, aioComponent!!.getUsbSerialPort(context!!, aioDeviceType), parameter, parser)
-        } else {
-            device = aioComponent!!.getOthersDevice(context!!, aioDeviceType, parser)
+        device = when (parameter) {
+            is SerialPortMeasureParameter -> SerialPortDevice(context!!, aioDeviceType, parameter, parser)
+            is UsbMeasureParameter -> UsbPortDevice(context!!, aioDeviceType, aioComponent!!.getUsbSerialPort(context!!, aioDeviceType), parameter, parser)
+            else -> aioComponent!!.getOthersDevice(context!!, aioDeviceType, parser)
         }
         if (device != null) {
             device.addAIOComponent(aioComponent)
             device.addListener(listener, logcatListener)
-            deviceMap.put(aioDeviceType, device)
+            deviceMap[aioDeviceType] = device
         }
         status = MeasureStatus.PREPARE
     }

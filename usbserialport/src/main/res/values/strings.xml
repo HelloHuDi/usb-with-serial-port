@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">usbSerialPort</string>
-    <string name="usb_module_bug_hint">检测到当前系统存在usb模块Bug,请与厂商联系</string>
-    <string name="find_target_device_error">查找设备失败</string>
-    <string name="open_target_device_error">打开设备失败</string>
-    <string name="measure_target_device_error">本次测量失败</string>
-    <string name="request_permission_failed">权限请求失败</string>
-    <string name="error_configuration">参数错误,串口打开失败</string>
-    <string name="error_security">当前串口没有读写权限</string>
-    <string name="error_unknown">串口打开失败</string>
+    <string name="usb_module_bug_hint">USB module Bug is detected in the current system, please contact the vendor</string>
+    <string name="find_target_device_error">Lookup device failure</string>
+    <string name="open_target_device_error">Open device failure</string>
+    <string name="measure_target_device_error">Failure of this measurement</string>
+    <string name="request_permission_failed">Permission request failure</string>
+    <string name="error_configuration">Error of parameter, failure to open serial port</string>
+    <string name="error_security">No read and write permissions in the current serial port</string>
+    <string name="error_unknown">Failure to open serial port</string>
 </resources>

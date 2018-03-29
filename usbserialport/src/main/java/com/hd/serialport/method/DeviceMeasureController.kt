@@ -55,21 +55,20 @@ object DeviceMeasureController {
     fun scanSerialPort(): ConcurrentHashMap<String, String> = SerialPortFinder().allDevices
 
     fun measure(usbDevice: UsbDevice, deviceType: UsbPortDeviceType, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
-        val driver: UsbSerialDriver
-        when (deviceType) {
-            UsbPortDeviceType.USB_CDC_ACM -> driver = CdcAcmSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_CP21xx -> driver = Cp21xxSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_FTD -> driver = FtdiSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_PL2303 -> driver = ProlificSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_CH34xx -> driver = Ch34xSerialDriver(usbDevice)
-            else -> throw NullPointerException("unknown usb device type:" + deviceType)
+        val driver = when (deviceType) {
+            UsbPortDeviceType.USB_CDC_ACM -> CdcAcmSerialDriver(usbDevice)
+            UsbPortDeviceType.USB_CP21xx -> Cp21xxSerialDriver(usbDevice)
+            UsbPortDeviceType.USB_FTD -> FtdiSerialDriver(usbDevice)
+            UsbPortDeviceType.USB_PL2303 -> ProlificSerialDriver(usbDevice)
+            UsbPortDeviceType.USB_CH34xx -> Ch34xSerialDriver(usbDevice)
+            else -> throw NullPointerException("unknown usb device type:$deviceType")
         }
         measure(driver.ports[0], usbMeasureParameter, usbMeasureListener)
     }
 
     fun measure(usbSerialDriverList: List<UsbSerialDriver>?, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
         if (usbSerialDriverList != null) {
-            usbSerialDriverList.filter { it.deviceType == usbMeasureParameter.usbPortDeviceType || usbMeasureParameter.usbPortDeviceType==UsbPortDeviceType.USB_OTHERS }
+            usbSerialDriverList.filter { it.deviceType == usbMeasureParameter.usbPortDeviceType || usbMeasureParameter.usbPortDeviceType == UsbPortDeviceType.USB_OTHERS }
                     .filter { it.ports[0] != null }.forEach { measure(it.ports[0], usbMeasureParameter, usbMeasureListener) }
         } else {
             measure(scanUsbPort(), usbMeasureParameter, usbMeasureListener)
@@ -85,16 +84,21 @@ object DeviceMeasureController {
         }
     }
 
-    fun measure(paths: Array<String>?, serialPortMeasureParameter: SerialPortMeasureParameter, serialPortMeasureListener: SerialPortMeasureListener) {
+    fun measure(paths: Array<String>?, serialPortMeasureParameter: SerialPortMeasureParameter, serialPortMeasureListeners: List<SerialPortMeasureListener>) {
         if (paths != null) {
-            for (path in paths) {
+            for (index in paths.indices) {
+                val path = paths[index]
                 if (!path.isEmpty()) {
                     serialPortMeasureParameter.devicePath = path
-                    measure(serialPortMeasureParameter, serialPortMeasureListener)
+                    if(serialPortMeasureListeners.size==paths.size){
+                        measure(serialPortMeasureParameter, serialPortMeasureListeners[index])
+                    }else{
+                        measure(serialPortMeasureParameter, serialPortMeasureListeners[0])
+                    }
                 }
             }
         } else {
-            measure(SerialPortFinder().allDevicesPath, serialPortMeasureParameter, serialPortMeasureListener)
+            measure(SerialPortFinder().allDevicesPath, serialPortMeasureParameter, serialPortMeasureListeners)
         }
     }
 
@@ -103,7 +107,7 @@ object DeviceMeasureController {
             serialPortEngine?.open(serialPortMeasureParameter, serialPortMeasureListener)
             serialPortMeasure = true
         } else {
-            measure(paths = null, serialPortMeasureParameter = serialPortMeasureParameter, serialPortMeasureListener = serialPortMeasureListener)
+            measure(paths = null, serialPortMeasureParameter = serialPortMeasureParameter, serialPortMeasureListeners = listOf(serialPortMeasureListener))
         }
     }
 

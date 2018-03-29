@@ -117,7 +117,7 @@ class RequestUsbPermission {
                 usb_permission -> {
                     val device = intent.getParcelableExtra<UsbDevice>(UsbManager.EXTRA_DEVICE)
                     val success = intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)
-                    L.d("权限响应：" + device.hashCode() + "===" + success + "===" + device)
+                    L.d("permission response ：" + device.hashCode() + "===" + success + "===" + device)
                     requestContinue(context, getUsbManager(context))
                 }
             }

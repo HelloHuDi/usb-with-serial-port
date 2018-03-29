@@ -3,7 +3,7 @@
 ## android studio 引入：
 
 ```
-dependencies {
+dependencies { 
      compile 'com.hd:usb-serial-port-measure:0.3.1@aar'
      compile 'com.hd:usbserialport:0.2.2'
   }
