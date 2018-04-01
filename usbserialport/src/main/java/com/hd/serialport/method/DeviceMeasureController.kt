@@ -40,6 +40,10 @@ object DeviceMeasureController {
     }
 
     fun init(context: Context, openLog: Boolean, callback: RequestUsbPermission.RequestPermissionCallback? = null) {
+        init(context, openLog, true,callback)
+    }
+
+    fun init(context: Context, openLog: Boolean, requestUsbPermission: Boolean, callback: RequestUsbPermission.RequestPermissionCallback? = null) {
         if (!SystemSecurity.check(context)) throw RuntimeException("There are a error in the current system usb module !")
         L.allowLog = openLog
         usbPortMeasure = false
@@ -47,7 +51,8 @@ object DeviceMeasureController {
         this.usbManager = context.applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
         serialPortEngine = SerialPortEngine(context.applicationContext)
         usbPortEngine = UsbPortEngine(context.applicationContext, usbManager!!)
-        RequestUsbPermission.newInstance().requestAllUsbDevicePermission(context.applicationContext, callback)
+        if (requestUsbPermission)
+            RequestUsbPermission.newInstance().requestAllUsbDevicePermission(context.applicationContext, callback)
     }
 
     fun scanUsbPort(): List<UsbSerialDriver> = UsbSerialProber.getDefaultProber().findAllDrivers(usbManager)
@@ -90,9 +95,9 @@ object DeviceMeasureController {
                 val path = paths[index]
                 if (!path.isEmpty()) {
                     serialPortMeasureParameter.devicePath = path
-                    if(serialPortMeasureListeners.size==paths.size){
+                    if (serialPortMeasureListeners.size == paths.size) {
                         measure(serialPortMeasureParameter, serialPortMeasureListeners[index])
-                    }else{
+                    } else {
                         measure(serialPortMeasureParameter, serialPortMeasureListeners[0])
                     }
                 }

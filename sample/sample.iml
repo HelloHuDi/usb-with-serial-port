@@ -133,6 +133,7 @@
     <orderEntry type="library" name="com.android.support:support-annotations:26.1.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.31@jar" level="project" />
-    <orderEntry type="module" module-name="usb-serial-port-measure" />
+    <orderEntry type="library" name="com.hd:usb-serial-port-measure-0.3.2" level="project" />
+    <orderEntry type="library" name="com.hd:usbserialport-0.2.3" level="project" />
   </component>
 </module>

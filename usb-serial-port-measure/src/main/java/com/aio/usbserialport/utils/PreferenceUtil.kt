@@ -2,6 +2,7 @@ package com.aio.usbserialport.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
@@ -17,18 +18,13 @@ object PreferenceUtil{
     fun put(context: Context, key: String, any: Any) {
         val sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
         val editor = sp.edit()
-        if (any is String) {
-            editor.putString(key, any)
-        } else if (any is Int) {
-            editor.putInt(key, any)
-        } else if (any is Boolean) {
-            editor.putBoolean(key, any)
-        } else if (any is Float) {
-            editor.putFloat(key, any)
-        } else if (any is Long) {
-            editor.putLong(key, any)
-        } else {
-            editor.putString(key, any.toString())
+        when (any) {
+            is String -> editor.putString(key, any)
+            is Int -> editor.putInt(key, any)
+            is Boolean -> editor.putBoolean(key, any)
+            is Float -> editor.putFloat(key, any)
+            is Long -> editor.putLong(key, any)
+            else -> editor.putString(key, any.toString())
         }
         SharedPreferencesCompat.apply(editor)
     }
@@ -36,16 +32,15 @@ object PreferenceUtil{
     fun get(context: Context, key: String, defaultObject: Any): Any {
         val sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE)
         if (contains(context, key)) {
-            if (defaultObject is String) {
-                return sp.getString(key, defaultObject)
-            } else if (defaultObject is Int) {
-                return sp.getInt(key, defaultObject)
-            } else if (defaultObject is Boolean) {
-                return sp.getBoolean(key, defaultObject)
-            } else if (defaultObject is Float) {
-                return sp.getFloat(key, defaultObject)
-            } else if (defaultObject is Long) {
-                return sp.getLong(key, defaultObject)
+            when (defaultObject) {
+                is String -> return sp.getString(key, defaultObject)
+                is Int -> return sp.getInt(key, defaultObject)
+                is Boolean -> return sp.getBoolean(key, defaultObject)
+                is Float -> return sp.getFloat(key, defaultObject)
+                is Long -> return sp.getLong(key, defaultObject)
+                else -> {
+                    Log.e("tag","==others type:$defaultObject")
+                }
             }
         }
         return defaultObject
@@ -99,7 +94,6 @@ object PreferenceUtil{
             } catch (e: IllegalAccessException) {
             } catch (e: InvocationTargetException) {
             }
-
             editor.commit()
         }
     }

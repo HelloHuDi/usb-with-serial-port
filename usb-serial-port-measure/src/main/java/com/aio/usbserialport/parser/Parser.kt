@@ -1,6 +1,5 @@
 package com.aio.usbserialport.parser
 
-import com.aio.usbserialport.cache.UsbSerialPortCache
 import com.aio.usbserialport.device.Device
 import com.aio.usbserialport.result.ParserResult
 import com.hd.serialport.config.MeasureStatus
@@ -87,7 +86,8 @@ abstract class Parser {
 
     open fun saveDevice() {
         L.d("save device :"+device!!.context+"="+device?.aioDeviceType+"="+port+"="+devicePath)
-        UsbSerialPortCache.newInstance(device!!.context,device!!.aioDeviceType).setUsbSerialPortCache(usbPort=port,serialPortPath = devicePath)
+        //No caching is provided because of performance problems
+        //UsbSerialPortCache.newInstance(device!!.context,device!!.aioDeviceType).setUsbSerialPortCache(usbPort=port,serialPortPath = devicePath)
     }
 
     private fun clear() {

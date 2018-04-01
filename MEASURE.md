@@ -4,8 +4,8 @@
 
 ```
 dependencies { 
-     compile 'com.hd:usb-serial-port-measure:0.3.1@aar'
-     compile 'com.hd:usbserialport:0.2.2'
+     compile 'com.hd:usb-serial-port-measure:0.3.2@aar'
+     compile 'com.hd:usbserialport:0.2.3'
   }
 ```
 

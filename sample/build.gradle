@@ -23,5 +23,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation lib_annotations
-    compile project(':usb-serial-port-measure')
+//    compile project(':usb-serial-port-measure')
+    compile 'com.hd:usb-serial-port-measure:0.3.2@aar'
+    compile 'com.hd:usbserialport:0.2.3'
 }

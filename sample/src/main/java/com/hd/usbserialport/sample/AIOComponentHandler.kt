@@ -57,13 +57,11 @@ class AIOComponentHandler : AIOComponent {
      * provide serial port path for measure
      */
     override fun getSerialPortPath(context: Context, type: Int): String? {
-        val path: String?
-        when (type) {
+        return when (type) {
             AIODeviceType.UNKNOWN_DEVICE -> throw NullPointerException("unknown aio type")
-            AIODeviceType.DEBUG_DEVICE -> path = "/dev/ttyS3"
-            else -> path = UsbSerialPortCache.newInstance(context, type).getSerialPortCache()
+            AIODeviceType.DEBUG_DEVICE -> "/dev/ttyS3"
+            else -> UsbSerialPortCache.newInstance(context, type).getSerialPortCache()
         }
-        return path
     }
 
     /**

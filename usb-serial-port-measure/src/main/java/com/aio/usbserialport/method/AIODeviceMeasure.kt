@@ -13,6 +13,7 @@ import com.aio.usbserialport.listener.ReceiveResultListener
 import com.aio.usbserialport.parser.EmptyParser
 import com.aio.usbserialport.parser.Parser
 import com.hd.serialport.config.MeasureStatus
+import com.hd.serialport.help.RequestUsbPermission
 import com.hd.serialport.method.DeviceMeasureController
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.param.UsbMeasureParameter
@@ -43,9 +44,14 @@ object AIODeviceMeasure {
      * init measure component
      */
     fun init(context: Context, openLog: Boolean, aioComponent: AIOComponent) {
+        init(context,openLog,true,aioComponent)
+    }
+
+    fun init(context: Context, openLog: Boolean,requestUsbPermission: Boolean, aioComponent: AIOComponent,
+             callback: RequestUsbPermission.RequestPermissionCallback? = null) {
         this.aioComponent = aioComponent
         AIODeviceMeasure.context = context.applicationContext
-        DeviceMeasureController.init(AIODeviceMeasure.context!!, openLog)
+        DeviceMeasureController.init(AIODeviceMeasure.context!!, openLog,requestUsbPermission,callback)
     }
 
     /**

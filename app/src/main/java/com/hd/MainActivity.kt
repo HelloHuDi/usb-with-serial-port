@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         AIODeviceMeasure.with(AIODeviceType.DEBUG_DEVICE, object : ReceiveResultListener {
             override fun receive(parserResult: ParserResult) {
-                L.d("receive : " + parserResult.toString())
+                L.d("receive : $parserResult")
             }
 
             override fun error(msg: String) {
-                L.d("error : " + msg)
+                L.d("error : $msg")
             }
         }).startMeasure()
     }

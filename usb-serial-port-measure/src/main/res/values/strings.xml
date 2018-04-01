@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">sihealdevicelibrary</string>
-    <string name="measure_error">本次测量失败</string>
-    <string name="unpredictable_errors">很抱歉,出现了意料之外的错误!</string>
+    <string name="measure_error">Failure of this measurement</string>
+    <string name="unpredictable_errors">There is an unexpected mistake!</string>
 </resources>
