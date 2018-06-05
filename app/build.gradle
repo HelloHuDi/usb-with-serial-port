@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion rootProject.android_compileSdkVersion
-    buildToolsVersion rootProject.android_buildToolsVersion
     defaultConfig {
         minSdkVersion rootProject.android_minSdkVersion
         targetSdkVersion rootProject.android_targetSdkVersion
@@ -28,8 +27,7 @@ dependencies {
     })
     //noinspection GradleCompatible
     implementation lib_appcompat
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
-    implementation project(':sample')
+    api project(':sample')
 }

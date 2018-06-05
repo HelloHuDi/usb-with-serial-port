@@ -1,14 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.31'
-    ext.anko_version = "0.10.1"
+    ext.kotlin_version = '1.2.40'
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
@@ -32,9 +31,9 @@ task clean(type: Delete) {
 
 ext {
     android_compileSdkVersion = 27
-    android_buildToolsVersion = '27.0.2'
+    android_buildToolsVersion = '27.0.3'
     android_minSdkVersion = 17
     android_targetSdkVersion = 27
-    lib_appcompat = 'com.android.support:appcompat-v7:26.1.0'
-    lib_annotations = 'com.android.support:support-annotations:26.1.0'
+    lib_appcompat = 'com.android.support:appcompat-v7:27.1.1'
+    lib_annotations = 'com.android.support:support-annotations:27.1.1'
 }

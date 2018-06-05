@@ -9,7 +9,7 @@ import com.hd.serialport.usb_driver.UsbSerialPort
  * Created by hd on 2017/8/27 .
  *
  */
-class UsbReadWriteRunnable(val usbSerialPort: UsbSerialPort, measureListener: UsbMeasureListener, usbPortEngine: UsbPortEngine) :
+class UsbReadWriteRunnable(private val usbSerialPort: UsbSerialPort, measureListener: UsbMeasureListener, usbPortEngine: UsbPortEngine) :
         ReadWriteRunnable(usbPortEngine.context, measureListener) {
     init {
         measureListener.write(usbSerialPort)

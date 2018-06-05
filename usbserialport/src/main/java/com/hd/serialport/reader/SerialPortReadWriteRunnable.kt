@@ -9,8 +9,8 @@ import com.hd.serialport.listener.SerialPortMeasureListener
  * Created by hd on 2017/8/27 .
  *
  */
-class SerialPortReadWriteRunnable(val devicePath:String,val serialPort: SerialPort,
-          serialPortMeasureListener: SerialPortMeasureListener, serialPortEngine: SerialPortEngine) :
+class SerialPortReadWriteRunnable(private val devicePath:String, private val serialPort: SerialPort,
+                                  serialPortMeasureListener: SerialPortMeasureListener, serialPortEngine: SerialPortEngine) :
         ReadWriteRunnable(serialPortEngine.context, serialPortMeasureListener) {
     init {
         (measureListener as SerialPortMeasureListener).write(serialPort.outputStream!!)

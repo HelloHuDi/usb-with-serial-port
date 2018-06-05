@@ -25,11 +25,11 @@ import java.util.concurrent.ConcurrentHashMap
 @SuppressLint("StaticFieldLeak")
 object DeviceMeasureController {
 
-    private var usbManager: UsbManager? = null
+    private lateinit var usbManager: UsbManager
 
-    private var usbPortEngine: UsbPortEngine? = null
+    private lateinit var usbPortEngine: UsbPortEngine
 
-    private var serialPortEngine: SerialPortEngine? = null
+    private lateinit var serialPortEngine: SerialPortEngine
 
     private var usbPortMeasure = false
 
@@ -50,7 +50,7 @@ object DeviceMeasureController {
         serialPortMeasure = false
         this.usbManager = context.applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
         serialPortEngine = SerialPortEngine(context.applicationContext)
-        usbPortEngine = UsbPortEngine(context.applicationContext, usbManager!!)
+        usbPortEngine = UsbPortEngine(context.applicationContext, usbManager)
         if (requestUsbPermission)
             RequestUsbPermission.newInstance().requestAllUsbDevicePermission(context.applicationContext, callback)
     }
@@ -82,7 +82,7 @@ object DeviceMeasureController {
 
     fun measure(usbSerialPort: UsbSerialPort?, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
         if (usbSerialPort != null) {
-            usbPortEngine?.open(usbSerialPort, usbMeasureParameter, usbMeasureListener)
+            usbPortEngine.open(usbSerialPort, usbMeasureParameter, usbMeasureListener)
             usbPortMeasure = true
         } else {
             measure(usbSerialDriverList = null, usbMeasureParameter = usbMeasureParameter, usbMeasureListener = usbMeasureListener)
@@ -109,7 +109,7 @@ object DeviceMeasureController {
 
     fun measure(serialPortMeasureParameter: SerialPortMeasureParameter, serialPortMeasureListener: SerialPortMeasureListener) {
         if (!serialPortMeasureParameter.devicePath.isNullOrEmpty()) {
-            serialPortEngine?.open(serialPortMeasureParameter, serialPortMeasureListener)
+            serialPortEngine.open(serialPortMeasureParameter, serialPortMeasureListener)
             serialPortMeasure = true
         } else {
             measure(paths = null, serialPortMeasureParameter = serialPortMeasureParameter, serialPortMeasureListeners = listOf(serialPortMeasureListener))
@@ -118,19 +118,19 @@ object DeviceMeasureController {
 
     fun write(data: List<ByteArray>?) {
         if (usbPortMeasure)
-            usbPortEngine?.write(data)
+            usbPortEngine.write(data)
         if (serialPortMeasure)
-            serialPortEngine?.write(data)
+            serialPortEngine.write(data)
     }
 
     fun stop() {
         L.d("DeviceMeasureController stop")
         if (usbPortMeasure) {
-            usbPortEngine?.stop()
+            usbPortEngine.stop()
             usbPortMeasure = false
         }
         if (serialPortMeasure) {
-            serialPortEngine?.stop()
+            serialPortEngine.stop()
             serialPortMeasure = false
         }
     }
