@@ -44,12 +44,12 @@ public class AIOApp extends Application {
          DeviceMeasureController.INSTANCE.measure(DeviceMeasureController.INSTANCE.scanUsbPort(),new UsbMeasureParameter(), new UsbMeasureListener() {
              @Override
              public void measuring(UsbSerialPort usbSerialPort, byte[] data) {
-                 
+                 //处理返回数据
              }
  
              @Override
              public void write(UsbSerialPort usbSerialPort) {
-              //允许持续性写入数据
+                 //允许持续性写入数据
                  try {
                      usbSerialPort.write(new byte[]{(byte) 0xff, (byte) 0xff},1000);
                  } catch (IOException e) {
@@ -59,7 +59,7 @@ public class AIOApp extends Application {
  
              @Override
              public void measureError(String message) {
- 
+                
              }
          });
      }
@@ -74,12 +74,12 @@ public class AIOApp extends Application {
         DeviceMeasureController.INSTANCE.measure(port, new UsbMeasureParameter(115200,8,1,0), new UsbMeasureListener() {
             @Override
             public void measuring(UsbSerialPort usbSerialPort, byte[] data) {
-
+                //处理返回数据
             }
 
             @Override
             public void write(UsbSerialPort usbSerialPort) {
-             //允许持续性写入数据
+                //允许持续性写入数据
                 try {
                     usbSerialPort.write(new byte[]{(byte) 0xff, (byte) 0xff},1000);
                 } catch (IOException e) {
@@ -105,12 +105,12 @@ public class AIOApp extends Application {
         DeviceMeasureController.INSTANCE.measure(null, new SerialPortMeasureParameter(), new SerialPortMeasureListener() {
             @Override
             public void measuring(String path, byte[] data) {
-                
+                //处理返回数据
             }
 
             @Override
             public void write(OutputStream outputStream) {
-            //允许持续性写入数据
+                //允许持续性写入数据
                 try {
                     outputStream.write(new byte[]{(byte) 0xff, (byte) 0xff});
                 } catch (IOException e) {
@@ -134,12 +134,12 @@ public class AIOApp extends Application {
             DeviceMeasureController.INSTANCE.measure(new SerialPortMeasureParameter(targetDevicePath,115200,0), new SerialPortMeasureListener() {
                 @Override
                 public void measuring(String path, byte[] data) {
-                    
+                    //处理返回数据
                 }
 
                 @Override
                 public void write(OutputStream outputStream) {
-                //允许持续性写入数据
+                    //允许持续性写入数据
                     try {
                         outputStream.write(new byte[]{(byte) 0xff, (byte) 0xff});
                     } catch (IOException e) {
