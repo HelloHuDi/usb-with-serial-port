@@ -229,9 +229,8 @@ public class Ch34xSerialDriver extends CommonUsbSerialDriver {
                         amtWritten = 0;
                     }
                 }
-
                 if (amtWritten <= 0) {
-                    amtWritten = 0;
+                    throw new IOException("Error writing " + writeLength + " bytes at offset " + offset + " length=" + src.length);
                 }
                 offset += amtWritten;
             }

@@ -303,8 +303,11 @@ public class CdcAcmSerialDriver implements UsbSerialDriver {
                         System.arraycopy(src, offset, mWriteBuffer, 0, writeLength);
                         writeBuffer = mWriteBuffer;
                     }
-
-                    amtWritten = mConnection.bulkTransfer(mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
+                    if (mWriteEndpoint != null && mConnection != null) {
+                        amtWritten = mConnection.bulkTransfer(mWriteEndpoint, writeBuffer, writeLength, timeoutMillis);
+                    } else {
+                        throw new IOException();
+                    }
                 }
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength + " bytes at offset " + offset + " length=" + src.length);

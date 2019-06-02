@@ -321,8 +321,11 @@ public class FtdiSerialDriver extends CommonUsbSerialDriver {
                         System.arraycopy(src, offset, mWriteBuffer, 0, writeLength);
                         writeBuffer = mWriteBuffer;
                     }
-
-                    amtWritten = mConnection.bulkTransfer(endpoint, writeBuffer, writeLength, timeoutMillis);
+                    if (endpoint != null && mConnection != null) {
+                        amtWritten = mConnection.bulkTransfer(endpoint, writeBuffer, writeLength, timeoutMillis);
+                    } else {
+                        throw new IOException();
+                    }
                 }
 
                 if (amtWritten <= 0) {
