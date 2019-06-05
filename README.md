@@ -1,3 +1,11 @@
+<p align="center">
+	<img width="72" height="72" src="art/icon.png"/>
+</p>
+<h3 align="center">usbserialport</h3>
+<p align="center">
+<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.2.5-blue.svg"></img></a>
+</p>
+
 ## 提供android系统下usb转串口及串口(UART,RS232)通信方式
 
 ## [参考串口通信源码](https://github.com/cepr/android-serialport-api)
@@ -9,7 +17,7 @@
 
 ```
 dependencies {
-      implementation 'com.hd:usbserialport:0.2.4'
+      implementation 'com.hd:usbserialport:last-version'
   }
 ```
 ## 注意：usbserialport只实现了简单的读写，更深度化的使用可查看 [usb-serial-port-measure](MEASURE.md)

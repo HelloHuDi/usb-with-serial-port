@@ -1,3 +1,11 @@
+<p align="center">
+	<img width="72" height="72" src="art/icon.png"/>
+</p>
+<h3 align="center">usb-serial-port-measure</h3>
+<p align="center">
+<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.3.3-blue.svg"></img></a>
+</p>
+
 ### usb-serial-port-measure是对usbserialport的深度封装，力求用最少代码完成usb及串口设备的测量
 
 ## android studio 引入：
@@ -5,7 +13,7 @@
 ```
 dependencies { 
      implementation 'com.hd:usb-serial-port-measure:0.3.3@aar'
-     implementation 'com.hd:usbserialport:0.2.4'
+     implementation 'com.hd:usbserialport:0.2.5'
   }
 ```
 

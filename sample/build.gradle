@@ -26,5 +26,5 @@ dependencies {
 //    api project(':usb-serial-port-measure')
 //    api project(':usbserialport')
     api 'com.hd:usb-serial-port-measure:0.3.3@aar'
-    api 'com.hd:usbserialport:0.2.4'
+    api 'com.hd:usbserialport:0.2.5'
 }
