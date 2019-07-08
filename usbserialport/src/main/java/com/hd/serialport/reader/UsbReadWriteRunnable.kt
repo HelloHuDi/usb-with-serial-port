@@ -9,27 +9,32 @@ import com.hd.serialport.usb_driver.UsbSerialPort
  * Created by hd on 2017/8/27 .
  *
  */
-class UsbReadWriteRunnable(private val usbSerialPort: UsbSerialPort, measureListener: UsbMeasureListener, usbPortEngine: UsbPortEngine) :
-        ReadWriteRunnable(usbPortEngine.context, measureListener) {
+class UsbReadWriteRunnable(private val usbSerialPort: UsbSerialPort,
+                           listener: UsbMeasureListener, engine: UsbPortEngine, tag: Any?) :
+        ReadWriteRunnable(tag, engine.context, listener) {
     init {
-        measureListener.write(usbSerialPort)
+        listener.write(tag, usbSerialPort)
     }
-
+    
     override fun writing(byteArray: ByteArray) {
         usbSerialPort.write(byteArray, READ_WAIT_MILLIS * 10)
     }
-
+    
     override fun reading() {
         val length = usbSerialPort.read(readBuffer.array(), READ_WAIT_MILLIS)
         if (length > 0) {
             val data = ByteArray(length)
             readBuffer.get(data, 0, length)
-            (measureListener as UsbMeasureListener).measuring(usbSerialPort, data)
+            (measureListener as UsbMeasureListener).measuring(tag, usbSerialPort, data)
         }
         readBuffer.clear()
     }
-
+    
     override fun close() {
-        usbSerialPort.close()
+        try {
+            usbSerialPort.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

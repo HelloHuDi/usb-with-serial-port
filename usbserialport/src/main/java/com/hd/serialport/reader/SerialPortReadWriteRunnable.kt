@@ -9,39 +9,39 @@ import com.hd.serialport.listener.SerialPortMeasureListener
  * Created by hd on 2017/8/27 .
  *
  */
-class SerialPortReadWriteRunnable(private val devicePath:String, private val serialPort: SerialPort,
-                                  serialPortMeasureListener: SerialPortMeasureListener, serialPortEngine: SerialPortEngine) :
-        ReadWriteRunnable(serialPortEngine.context, serialPortMeasureListener) {
+class SerialPortReadWriteRunnable(private val devicePath: String, private val serialPort: SerialPort,
+                                  listener: SerialPortMeasureListener, engine: SerialPortEngine, tag: Any?) :
+        ReadWriteRunnable(tag, engine.context, listener) {
     init {
-        (measureListener as SerialPortMeasureListener).write(serialPort.outputStream!!)
+        (measureListener as SerialPortMeasureListener).write(tag, serialPort.outputStream!!)
     }
-
+    
     override fun writing(byteArray: ByteArray) {
-        serialPort.outputStream!!.write(byteArray)
+        serialPort.outputStream?.write(byteArray)
     }
-
+    
     override fun reading() {
-        var length = serialPort.inputStream!!.available()
+        var length = serialPort.inputStream?.available() ?: 0
         if (length > 0) {
             length = serialPort.inputStream!!.read(readBuffer.array())
             val data = ByteArray(length)
             readBuffer.get(data, 0, length)
-            (measureListener as SerialPortMeasureListener).measuring(devicePath,data)
+            (measureListener as SerialPortMeasureListener).measuring(tag, devicePath, data)
             readBuffer.clear()
         }
     }
-
+    
     override fun close() {
         try {
             serialPort.outputStream?.close()
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
         try {
             serialPort.inputStream?.close()
-        }catch (e :Exception){
-
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
-
+    
 }

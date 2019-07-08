@@ -71,7 +71,7 @@ class UsbSerialPortCache constructor(val context: Context, val deviceType: Int) 
         }else if(usbDevice!=null){
             setUsbDeviceCache(usbDevice)
         }else if(!serialPortPath.isNullOrEmpty()){
-            setSerialPortCache(serialPortPath!!)
+            setSerialPortCache(serialPortPath)
         }
     }
 

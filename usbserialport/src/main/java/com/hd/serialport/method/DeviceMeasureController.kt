@@ -24,42 +24,36 @@ import java.util.concurrent.ConcurrentHashMap
  */
 @SuppressLint("StaticFieldLeak")
 object DeviceMeasureController {
-
+    
     private lateinit var usbManager: UsbManager
-
+    
     private lateinit var usbPortEngine: UsbPortEngine
-
+    
     private lateinit var serialPortEngine: SerialPortEngine
-
-    private var usbPortMeasure = false
-
-    private var serialPortMeasure = false
-
+    
     fun init(context: Context, openLog: Boolean) {
         init(context, openLog, null)
     }
-
+    
     fun init(context: Context, openLog: Boolean, callback: RequestUsbPermission.RequestPermissionCallback? = null) {
-        init(context, openLog, true,callback)
+        init(context, openLog, true, callback)
     }
-
+    
     fun init(context: Context, openLog: Boolean, requestUsbPermission: Boolean, callback: RequestUsbPermission.RequestPermissionCallback? = null) {
         if (!SystemSecurity.check(context)) throw RuntimeException("There are a error in the current system usb module !")
         L.allowLog = openLog
-        usbPortMeasure = false
-        serialPortMeasure = false
         this.usbManager = context.applicationContext.getSystemService(Context.USB_SERVICE) as UsbManager
         serialPortEngine = SerialPortEngine(context.applicationContext)
         usbPortEngine = UsbPortEngine(context.applicationContext, usbManager)
         if (requestUsbPermission)
             RequestUsbPermission.newInstance().requestAllUsbDevicePermission(context.applicationContext, callback)
     }
-
+    
     fun scanUsbPort(): List<UsbSerialDriver> = UsbSerialProber.getDefaultProber().findAllDrivers(usbManager)
-
+    
     fun scanSerialPort(): ConcurrentHashMap<String, String> = SerialPortFinder().allDevices
-
-    fun measure(usbDevice: UsbDevice, deviceType: UsbPortDeviceType, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
+    
+    fun measure(usbDevice: UsbDevice, deviceType: UsbPortDeviceType, parameter: UsbMeasureParameter, listener: UsbMeasureListener) {
         val driver = when (deviceType) {
             UsbPortDeviceType.USB_CDC_ACM -> CdcAcmSerialDriver(usbDevice)
             UsbPortDeviceType.USB_CP21xx -> Cp21xxSerialDriver(usbDevice)
@@ -68,70 +62,77 @@ object DeviceMeasureController {
             UsbPortDeviceType.USB_CH34xx -> Ch34xSerialDriver(usbDevice)
             else -> throw NullPointerException("unknown usb device type:$deviceType")
         }
-        measure(driver.ports[0], usbMeasureParameter, usbMeasureListener)
+        measure(driver.ports[0], parameter, listener)
     }
-
-    fun measure(usbSerialDriverList: List<UsbSerialDriver>?, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
-        if (usbSerialDriverList != null) {
-            usbSerialDriverList.filter { it.deviceType == usbMeasureParameter.usbPortDeviceType || usbMeasureParameter.usbPortDeviceType == UsbPortDeviceType.USB_OTHERS }
-                    .filter { it.ports[0] != null }.forEach { measure(it.ports[0], usbMeasureParameter, usbMeasureListener) }
+    
+    fun measure(usbSerialDriverList: List<UsbSerialDriver>?, parameter: UsbMeasureParameter, listener: UsbMeasureListener) {
+        if (!usbSerialDriverList.isNullOrEmpty()) {
+            usbSerialDriverList.filter { it.deviceType == parameter.usbPortDeviceType || parameter.usbPortDeviceType == UsbPortDeviceType.USB_OTHERS }
+                    .filter { it.ports[0] != null }.forEach { measure(it.ports[0], parameter, listener) }
         } else {
-            measure(scanUsbPort(), usbMeasureParameter, usbMeasureListener)
+            val portList = scanUsbPort()
+            if (portList.isNullOrEmpty()) {
+                measure(portList, parameter, listener)
+            } else {
+                listener.measureError(parameter.tag,"not find ports")
+            }
         }
     }
-
-    fun measure(usbSerialPort: UsbSerialPort?, usbMeasureParameter: UsbMeasureParameter, usbMeasureListener: UsbMeasureListener) {
-        if (usbSerialPort != null) {
-            usbPortEngine.open(usbSerialPort, usbMeasureParameter, usbMeasureListener)
-            usbPortMeasure = true
+    
+    fun measure(usbSerialPort: UsbSerialPort?, parameter: UsbMeasureParameter, listener: UsbMeasureListener) {
+        if (null != usbSerialPort) {
+            usbPortEngine.open(usbSerialPort, parameter, listener)
         } else {
-            measure(usbSerialDriverList = null, usbMeasureParameter = usbMeasureParameter, usbMeasureListener = usbMeasureListener)
+            measure(usbSerialDriverList = null, parameter = parameter, listener = listener)
         }
     }
-
-    fun measure(paths: Array<String>?, serialPortMeasureParameter: SerialPortMeasureParameter, serialPortMeasureListeners: List<SerialPortMeasureListener>) {
-        if (paths != null) {
+    
+    fun measure(paths: Array<String>?, parameter: SerialPortMeasureParameter, listeners: List<SerialPortMeasureListener>) {
+        if (!paths.isNullOrEmpty()) {
             for (index in paths.indices) {
                 val path = paths[index]
-                if (!path.isEmpty()) {
-                    serialPortMeasureParameter.devicePath = path
-                    if (serialPortMeasureListeners.size == paths.size) {
-                        measure(serialPortMeasureParameter, serialPortMeasureListeners[index])
-                    } else {
-                        measure(serialPortMeasureParameter, serialPortMeasureListeners[0])
+                when {
+                    path.isNotEmpty() -> {
+                        parameter.devicePath = path
+                        when {
+                            listeners.size == paths.size -> measure(parameter, listeners[index])
+                            listeners.isNotEmpty() -> measure(parameter, listeners[0])
+                            else -> L.d("not find serialPortMeasureListener")
+                        }
                     }
+                    index < listeners.size -> listeners[index].measureError(parameter.tag,"path is null")
+                    else -> L.d("current position $index path is empty :$path ")
                 }
             }
         } else {
-            measure(SerialPortFinder().allDevicesPath, serialPortMeasureParameter, serialPortMeasureListeners)
+            measure(SerialPortFinder().allDevicesPath, parameter, listeners)
         }
     }
-
-    fun measure(serialPortMeasureParameter: SerialPortMeasureParameter, serialPortMeasureListener: SerialPortMeasureListener) {
-        if (!serialPortMeasureParameter.devicePath.isNullOrEmpty()) {
-            serialPortEngine.open(serialPortMeasureParameter, serialPortMeasureListener)
-            serialPortMeasure = true
+   
+    fun measure(parameter: SerialPortMeasureParameter, listener: SerialPortMeasureListener) {
+        if (!parameter.devicePath.isNullOrEmpty()) {
+            serialPortEngine.open(parameter, listener)
         } else {
-            measure(paths = null, serialPortMeasureParameter = serialPortMeasureParameter, serialPortMeasureListeners = listOf(serialPortMeasureListener))
+            measure(paths = null, parameter = parameter, listeners = listOf(listener))
         }
     }
-
-    fun write(data: List<ByteArray>?) {
-        if (usbPortMeasure)
-            usbPortEngine.write(data)
-        if (serialPortMeasure)
-            serialPortEngine.write(data)
+    
+    /**write data by the tag filter, write all if tag==null*/
+    fun write(data: List<ByteArray>?, tag: Any? = null) {
+        L.d("DeviceMeasureController write usbPortEngine is working ${usbPortEngine.isWorking()}," +
+                "serialPortEngine is working ${serialPortEngine.isWorking()}")
+        when {
+            usbPortEngine.isWorking() -> usbPortEngine.write(tag, data)
+            serialPortEngine.isWorking() -> serialPortEngine.write(tag, data)
+        }
     }
-
-    fun stop() {
+    
+    /**stop engine by the tag filter, stop all if tag==null*/
+    fun stop(tag: Any? = null) {
         L.d("DeviceMeasureController stop")
-        if (usbPortMeasure) {
-            usbPortEngine.stop()
-            usbPortMeasure = false
-        }
-        if (serialPortMeasure) {
-            serialPortEngine.stop()
-            serialPortMeasure = false
+        when {
+            usbPortEngine.isWorking() -> usbPortEngine.stop(tag)
+            serialPortEngine.isWorking() -> serialPortEngine.stop(tag)
         }
     }
 }

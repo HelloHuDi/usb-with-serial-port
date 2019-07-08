@@ -6,10 +6,10 @@ package com.hd.serialport.listener
  *
  */
 interface MeasureListener {
-
+    
     /**
      * hint measure error message
      */
-    fun measureError(message:String)
-
+    fun measureError(tag: Any?, message: String)
+    
 }

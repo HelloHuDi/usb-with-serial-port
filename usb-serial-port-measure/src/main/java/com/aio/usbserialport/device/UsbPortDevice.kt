@@ -13,25 +13,25 @@ import java.util.*
  * Created by hd on 2017/8/28 .
  *
  */
-open class UsbPortDevice(context: Context,aioDeviceType:Int, val port: UsbSerialPort? = null,val parameter: UsbMeasureParameter, parser: Parser)
+open class UsbPortDevice(context: Context, aioDeviceType:Int, private val port: UsbSerialPort? = null, private val parameter: UsbMeasureParameter, parser: Parser)
     : Device(context,aioDeviceType, parser), UsbMeasureListener {
 
-    override fun write(usbSerialPort: UsbSerialPort) {
+    override fun write(tag: Any?,usbSerialPort: UsbSerialPort) {
         usbSerialPortList.add(usbSerialPort)
     }
 
     override fun measure() {
-        DeviceMeasureController.measure(usbSerialPort = port, usbMeasureParameter = parameter, usbMeasureListener = this)
+        DeviceMeasureController.measure(usbSerialPort = port, parameter = parameter, listener = this)
     }
 
     override fun release() {
     }
 
-    override fun measureError(message: String) {
+    override fun measureError(tag: Any?,message: String) {
         error(message)
     }
 
-    override fun measuring(usbSerialPort: UsbSerialPort, data: ByteArray) {
+    override fun measuring(tag: Any?,usbSerialPort: UsbSerialPort, data: ByteArray) {
         dataQueue.put(DataPackageEntity(port = usbSerialPort, data = data))
         addLogcat(Arrays.toString(data))
     }

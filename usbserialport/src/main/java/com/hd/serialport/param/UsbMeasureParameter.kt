@@ -15,7 +15,8 @@ import com.hd.serialport.config.UsbPortDeviceType
  * @param parity one of {@link UsbSerialPort#PARITY_NONE}, {@link UsbSerialPort#PARITY_ODD},
  * {@link UsbSerialPort#PARITY_EVEN}, {@link UsbSerialPort#PARITY_MARK}, or
  * {@link UsbSerialPort#PARITY_SPACE}.
+ * @param tag set tag
  */
 data class UsbMeasureParameter(var usbPortDeviceType: UsbPortDeviceType?=UsbPortDeviceType.USB_OTHERS,
                                var baudRate: Int = 115200, var dataBits: Int = 8, var stopBits: Int = 1,
-                               var parity: Int = 0):MeasureParameter()
+                               var parity: Int = 0,var tag : Any?="default_usb_tag"):MeasureParameter()

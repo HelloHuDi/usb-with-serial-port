@@ -12,11 +12,11 @@ interface SerialPortMeasureListener : MeasureListener {
      * receive data from serial port
      * @param path serial port device path[com.hd.serialport.param.SerialPortMeasureParameter.devicePath]
      */
-    fun measuring(path:String,data: ByteArray)
-
+    fun measuring(tag: Any?, path: String, data: ByteArray)
+    
     /**
      * only initialize one time,write data into serial port [OutputStream.write]
      */
-    fun write(outputStream: OutputStream)
-
+    fun write(tag: Any?, outputStream: OutputStream)
+    
 }
