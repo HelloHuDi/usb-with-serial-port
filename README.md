@@ -3,7 +3,7 @@
 </p>
 <h3 align="center">usbserialport</h3>
 <p align="center">
-<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.2.5-blue.svg"></img></a>
+<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.3.0-blue.svg"></img></a>
 </p>
 
 ## 提供android系统下usb转串口及串口(UART,RS232)通信方式
@@ -51,12 +51,12 @@ public class AIOApp extends Application {
          super.onResume();
          DeviceMeasureController.INSTANCE.measure(DeviceMeasureController.INSTANCE.scanUsbPort(),new UsbMeasureParameter(), new UsbMeasureListener() {
              @Override
-             public void measuring(UsbSerialPort usbSerialPort, byte[] data) {
+             public void measuring(@Nullable Object tag,UsbSerialPort usbSerialPort, byte[] data) {
                  //处理返回数据
              }
  
              @Override
-             public void write(UsbSerialPort usbSerialPort) {
+             public void write(@Nullable Object tag,UsbSerialPort usbSerialPort) {
                  //允许持续性写入数据
                  try {
                      usbSerialPort.write(new byte[]{(byte) 0xff, (byte) 0xff},1000);
@@ -66,7 +66,7 @@ public class AIOApp extends Application {
              }
  
              @Override
-             public void measureError(String message) {
+             public void measureError(@Nullable Object tag,String message) {
                 
              }
          });
@@ -81,12 +81,12 @@ public class AIOApp extends Application {
         UsbSerialPort port=DeviceMeasureController.INSTANCE.scanUsbPort().get(0).getPorts().get(0);
         DeviceMeasureController.INSTANCE.measure(port, new UsbMeasureParameter(115200,8,1,0), new UsbMeasureListener() {
             @Override
-            public void measuring(UsbSerialPort usbSerialPort, byte[] data) {
+            public void measuring(@Nullable Object tag,UsbSerialPort usbSerialPort, byte[] data) {
                 //处理返回数据
             }
 
             @Override
-            public void write(UsbSerialPort usbSerialPort) {
+            public void write(@Nullable Object tag,UsbSerialPort usbSerialPort) {
                 //允许持续性写入数据
                 try {
                     usbSerialPort.write(new byte[]{(byte) 0xff, (byte) 0xff},1000);
@@ -96,7 +96,7 @@ public class AIOApp extends Application {
             }
 
             @Override
-            public void measureError(String message) {
+            public void measureError(@Nullable Object tag,String message) {
                 
             }
         });
@@ -112,12 +112,12 @@ public class AIOApp extends Application {
         super.onResume();
         DeviceMeasureController.INSTANCE.measure(null, new SerialPortMeasureParameter(), new SerialPortMeasureListener() {
             @Override
-            public void measuring(String path, byte[] data) {
+            public void measuring(@Nullable Object tag,String path, byte[] data) {
                 //处理返回数据
             }
 
             @Override
-            public void write(OutputStream outputStream) {
+            public void write(@Nullable Object tag,OutputStream outputStream) {
                 //允许持续性写入数据
                 try {
                     outputStream.write(new byte[]{(byte) 0xff, (byte) 0xff});
@@ -127,7 +127,7 @@ public class AIOApp extends Application {
             }
                 
             @Override
-            public void measureError(String message) {
+            public void measureError(@Nullable Object tag,String message) {
 
             }
         });
@@ -141,12 +141,12 @@ public class AIOApp extends Application {
             String targetDevicePath="/dev/ttyS3";
             DeviceMeasureController.INSTANCE.measure(new SerialPortMeasureParameter(targetDevicePath,115200,0), new SerialPortMeasureListener() {
                 @Override
-                public void measuring(String path, byte[] data) {
+                public void measuring(@Nullable Object tag,String path, byte[] data) {
                     //处理返回数据
                 }
 
                 @Override
-                public void write(OutputStream outputStream) {
+                public void write(@Nullable Object tag,OutputStream outputStream) {
                     //允许持续性写入数据
                     try {
                         outputStream.write(new byte[]{(byte) 0xff, (byte) 0xff});
@@ -156,7 +156,7 @@ public class AIOApp extends Application {
                 }
                 
                 @Override
-                public void measureError(String message) {
+                public void measureError(@Nullable Object tag,String message) {
     
                 }
             });

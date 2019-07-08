@@ -7,11 +7,11 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -31,7 +31,7 @@ task clean(type: Delete) {
 
 ext {
     android_compileSdkVersion = 27
-    android_buildToolsVersion = '27.0.3'
+    android_buildToolsVersion = '28.0.3'
     android_minSdkVersion = 17
     android_targetSdkVersion = 27
     lib_appcompat = 'com.android.support:appcompat-v7:27.1.1'

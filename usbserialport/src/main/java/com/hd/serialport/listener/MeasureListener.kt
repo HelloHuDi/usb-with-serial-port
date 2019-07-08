@@ -9,6 +9,7 @@ interface MeasureListener {
     
     /**
      * hint measure error message
+     * @param tag [com.hd.serialport.param.SerialPortMeasureParameter.tag]
      */
     fun measureError(tag: Any?, message: String)
     

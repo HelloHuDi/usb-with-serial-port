@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-/*def siteUrl = 'https://github.com/HelloHuDi/usb-with-serial-port'
+def siteUrl = 'https://github.com/HelloHuDi/usb-with-serial-port'
 def gitUrl = 'https://github.com/HelloHuDi/usb-with-serial-port.git'
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-version = "0.3.3"
-group = "com.hd"*/
+version = "0.3.4"
+group = "com.hd"
 
 android {
     compileSdkVersion rootProject.android_compileSdkVersion
@@ -16,8 +16,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.android_minSdkVersion
         targetSdkVersion rootProject.android_targetSdkVersion
-        versionCode 33
-        versionName "0.3.3"
+        versionCode 34
+        versionName "0.3.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,8 +37,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation lib_annotations
     implementation project(':usbserialport')
-//    implementation 'com.hd:usbserialport:0.2.4'
-}/*
+//    implementation 'com.hd:usbserialport:0.3.0'
+}
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
@@ -114,4 +114,3 @@ javadoc {
         links "http://docs.oracle.com/javase/7/docs/api"
     }
 }
-*/

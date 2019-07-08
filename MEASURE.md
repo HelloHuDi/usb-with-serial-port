@@ -3,7 +3,7 @@
 </p>
 <h3 align="center">usb-serial-port-measure</h3>
 <p align="center">
-<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.3.3-blue.svg"></img></a>
+<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.3.4-blue.svg"></img></a>
 </p>
 
 ### usb-serial-port-measure是对usbserialport的深度封装，力求用最少代码完成usb及串口设备的测量
@@ -12,8 +12,8 @@
 
 ```
 dependencies { 
-     implementation 'com.hd:usb-serial-port-measure:0.3.3@aar'
-     implementation 'com.hd:usbserialport:0.2.5'
+     implementation 'com.hd:usb-serial-port-measure:0.3.4@aar'
+     implementation 'com.hd:usbserialport:0.3.0'
   }
 ```
 
