@@ -33,8 +33,9 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 
-import com.hd.serialport.config.UsbPortDeviceType;
+import com.hd.serialport.config.DriversType;
 import com.hd.serialport.utils.L;
 
 import java.io.IOException;
@@ -47,14 +48,19 @@ public class ProlificSerialDriver extends CommonUsbSerialDriver {
 
     private final String TAG = ProlificSerialDriver.class.getSimpleName();
 
-    public ProlificSerialDriver(UsbDevice device) {
-        mDevice = device;
-        mPort = new ProlificSerialPort(mDevice, 0);
+    public ProlificSerialDriver(UsbDevice mDevice) {
+        super(mDevice);
     }
 
     @Override
-    public UsbPortDeviceType getDeviceType() {
-        return UsbPortDeviceType.USB_PL2303;
+    public UsbSerialPort setPort(UsbDevice mDevice) {
+        return new ProlificSerialPort(mDevice, 0);
+    }
+
+    @NonNull
+    @Override
+    public String setDriverName() {
+        return DriversType.USB_PL2303;
     }
 
     public class ProlificSerialPort extends CommonUsbSerialPort {

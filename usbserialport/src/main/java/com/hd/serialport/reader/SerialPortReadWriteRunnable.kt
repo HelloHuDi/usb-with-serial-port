@@ -33,14 +33,20 @@ class SerialPortReadWriteRunnable(private val devicePath: String, private val se
     
     override fun close() {
         try {
-            serialPort.outputStream?.close()
+            serialPort.close()
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-        try {
-            serialPort.inputStream?.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } finally {
+            try {
+                serialPort.outputStream?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            try {
+                serialPort.inputStream?.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
     

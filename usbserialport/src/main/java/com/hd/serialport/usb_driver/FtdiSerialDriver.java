@@ -27,8 +27,9 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbRequest;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 
-import com.hd.serialport.config.UsbPortDeviceType;
+import com.hd.serialport.config.DriversType;
 import com.hd.serialport.utils.HexDump;
 import com.hd.serialport.utils.L;
 
@@ -87,21 +88,26 @@ import java.util.Map;
 @Keep
 public class FtdiSerialDriver extends CommonUsbSerialDriver {
 
+    public FtdiSerialDriver(UsbDevice mDevice) {
+        super(mDevice);
+    }
+
+    @NonNull
     @Override
-    public UsbPortDeviceType getDeviceType() {
-        return UsbPortDeviceType.USB_FTD;
+    public String setDriverName() {
+        return DriversType.USB_FTD;
+    }
+
+    @Override
+    public UsbSerialPort setPort(UsbDevice mDevice) {
+        return new FtdiSerialPort(mDevice, 0);
     }
 
     /**
      * FTDI chip types.
      */
     private static enum DeviceType {
-        TYPE_BM, TYPE_AM, TYPE_2232C, TYPE_R, TYPE_2232H, TYPE_4232H;
-    }
-
-    public FtdiSerialDriver(UsbDevice device) {
-        mDevice = device;
-        mPort = new FtdiSerialPort(mDevice, 0);
+        TYPE_BM, TYPE_AM, TYPE_2232C, TYPE_R, TYPE_2232H, TYPE_4232H
     }
 
     public class FtdiSerialPort extends CommonUsbSerialPort {

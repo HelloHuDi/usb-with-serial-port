@@ -29,15 +29,14 @@ import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbRequest;
 import android.os.Build;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.hd.serialport.config.UsbPortDeviceType;
+import com.hd.serialport.config.DriversType;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,31 +47,23 @@ import java.util.Map;
  * Serial Bus Class Definitions for Communication Devices, v1.1</a>
  */
 @Keep
-public class CdcAcmSerialDriver implements UsbSerialDriver {
+public class CdcAcmSerialDriver extends CommonUsbSerialDriver {
 
     private final String TAG = CdcAcmSerialDriver.class.getSimpleName();
 
-    private final UsbDevice mDevice;
-    private final UsbSerialPort mPort;
-
-    public CdcAcmSerialDriver(UsbDevice device) {
-        mDevice = device;
-        mPort = new CdcAcmSerialPort(device, 0);
+    public CdcAcmSerialDriver(UsbDevice mDevice) {
+        super(mDevice);
     }
 
     @Override
-    public UsbDevice getDevice() {
-        return mDevice;
+    public UsbSerialPort setPort(UsbDevice mDevice) {
+        return new CdcAcmSerialPort(mDevice, 0);
     }
 
+    @NonNull
     @Override
-    public List<UsbSerialPort> getPorts() {
-        return Collections.singletonList(mPort);
-    }
-
-    @Override
-    public UsbPortDeviceType getDeviceType() {
-        return UsbPortDeviceType.USB_CDC_ACM;
+    public String setDriverName() {
+        return DriversType.USB_CDC_ACM;
     }
 
     public class CdcAcmSerialPort extends CommonUsbSerialPort {

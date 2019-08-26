@@ -14,7 +14,9 @@ import com.hd.serialport.listener.SerialPortMeasureListener
 import com.hd.serialport.listener.UsbMeasureListener
 import com.hd.serialport.param.SerialPortMeasureParameter
 import com.hd.serialport.param.UsbMeasureParameter
-import com.hd.serialport.usb_driver.*
+import com.hd.serialport.usb_driver.UsbSerialDriver
+import com.hd.serialport.usb_driver.UsbSerialPort
+import com.hd.serialport.usb_driver.UsbSerialProber
 import com.hd.serialport.utils.L
 import java.util.concurrent.ConcurrentHashMap
 
@@ -54,14 +56,7 @@ object DeviceMeasureController {
     fun scanSerialPort(): ConcurrentHashMap<String, String> = SerialPortFinder().allDevices
     
     fun measure(usbDevice: UsbDevice, deviceType: UsbPortDeviceType, parameter: UsbMeasureParameter, listener: UsbMeasureListener) {
-        val driver = when (deviceType) {
-            UsbPortDeviceType.USB_CDC_ACM -> CdcAcmSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_CP21xx -> Cp21xxSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_FTD -> FtdiSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_PL2303 -> ProlificSerialDriver(usbDevice)
-            UsbPortDeviceType.USB_CH34xx -> Ch34xSerialDriver(usbDevice)
-            else -> throw NullPointerException("unknown usb device type:$deviceType")
-        }
+        val driver = UsbSerialProber.getDefaultProber().convertDriver(usbDevice,deviceType.value)
         measure(driver.ports[0], parameter, listener)
     }
     

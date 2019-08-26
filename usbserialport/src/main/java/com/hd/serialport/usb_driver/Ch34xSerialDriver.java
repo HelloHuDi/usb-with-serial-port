@@ -26,8 +26,9 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 
-import com.hd.serialport.config.UsbPortDeviceType;
+import com.hd.serialport.config.DriversType;
 import com.hd.serialport.utils.L;
 
 import java.io.IOException;
@@ -46,14 +47,19 @@ public class Ch34xSerialDriver extends CommonUsbSerialDriver {
 
     private static final String TAG = Ch34xSerialDriver.class.getSimpleName();
 
-    public Ch34xSerialDriver(UsbDevice device) {
-        mDevice = device;
-        mPort = new Ch340SerialPort(mDevice, 0);
+    public Ch34xSerialDriver(UsbDevice mDevice) {
+        super(mDevice);
     }
 
     @Override
-    public UsbPortDeviceType getDeviceType() {
-        return UsbPortDeviceType.USB_CH34xx;
+    public UsbSerialPort setPort(UsbDevice mDevice) {
+        return new Ch340SerialPort(mDevice, 0);
+    }
+
+    @NonNull
+    @Override
+    public String setDriverName() {
+        return DriversType.USB_CH34xx;
     }
 
     public class Ch340SerialPort extends CommonUsbSerialPort {

@@ -1,5 +1,6 @@
 package com.hd.serialport.reader
 
+import com.hd.serialport.config.UsbPortDeviceType
 import com.hd.serialport.engine.UsbPortEngine
 import com.hd.serialport.listener.UsbMeasureListener
 import com.hd.serialport.usb_driver.UsbSerialPort

@@ -24,9 +24,14 @@ package com.hd.serialport.usb_driver;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.support.annotation.Keep;
+import android.util.Pair;
+
+import com.hd.serialport.config.DriversType;
+import com.hd.serialport.usb_driver.extend.UsbExtendDriver;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -48,11 +53,27 @@ public class UsbSerialProber {
 
     private static ProbeTable getDefaultProbeTable() {
         final ProbeTable probeTable = new ProbeTable();
-        probeTable.addDriver(CdcAcmSerialDriver.class);//cdc
-        probeTable.addDriver(Cp21xxSerialDriver.class);//cp21xx系列
-        probeTable.addDriver(FtdiSerialDriver.class);//ftd
-        probeTable.addDriver(ProlificSerialDriver.class);//pl2303
-        probeTable.addDriver(Ch34xSerialDriver.class);//ch340
+        List<Pair<String, Class<? extends UsbSerialDriver>>> drivers = new UsbExtendDriver().getExtendDrivers();
+
+        List<String> defaultTypeList = Arrays.asList(DriversType.USB_CDC_ACM, DriversType.USB_CP21xx,//
+                                                     DriversType.USB_FTD, DriversType.USB_PL2303,//
+                                                     DriversType.USB_CH34xx);
+
+        List<Class<? extends CommonUsbSerialDriver>> defaultDriverList = Arrays.asList(CdcAcmSerialDriver.class, Cp21xxSerialDriver.class,//
+                                                                                       FtdiSerialDriver.class, ProlificSerialDriver.class,//
+                                                                                       Ch34xSerialDriver.class);
+
+        int index;
+        for (Pair<String, Class<? extends UsbSerialDriver>> pair : drivers) {
+            index = defaultTypeList.indexOf(pair.first);
+            if (index > 0) {
+                defaultDriverList.remove(index);
+            }
+            probeTable.addDriver(pair.second);
+        }
+        for(Class<? extends CommonUsbSerialDriver> driver : defaultDriverList){
+            probeTable.addDriver(driver);
+        }
         return probeTable;
     }
 
@@ -63,6 +84,7 @@ public class UsbSerialProber {
      * open any of the devices.
      *
      * @param usbManager
+     *
      * @return a list, possibly empty, of all compatible drivers
      */
     @Keep
@@ -104,5 +126,12 @@ public class UsbSerialProber {
             return driver;
         }
         return null;
+    }
+
+    public UsbSerialDriver convertDriver(UsbDevice usbDevice, String driverName) {
+        UsbSerialDriver driver = probeDevice(usbDevice);
+        if (driver == null)
+            throw new NullPointerException("unknown usb device type name : " + driverName);
+        return driver;
     }
 }

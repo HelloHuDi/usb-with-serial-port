@@ -2,6 +2,9 @@ package com.hd.serialport.usb_driver;
 
 import android.hardware.usb.UsbDevice;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
+
+import com.hd.serialport.config.UsbPortDeviceType;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,8 +14,20 @@ import java.util.List;
  */
 @Keep
 abstract class CommonUsbSerialDriver implements UsbSerialDriver {
-    UsbDevice mDevice;
-    UsbSerialPort mPort;
+
+    public UsbDevice mDevice;
+
+    public UsbSerialPort mPort;
+
+    public abstract UsbSerialPort setPort(UsbDevice mDevice);
+
+    @NonNull
+    public abstract String setDriverName();
+
+    public CommonUsbSerialDriver(UsbDevice mDevice) {
+        this.mDevice = mDevice;
+        mPort = setPort(mDevice);
+    }
 
     @Override
     public UsbDevice getDevice() {
@@ -22,5 +37,12 @@ abstract class CommonUsbSerialDriver implements UsbSerialDriver {
     @Override
     public List<UsbSerialPort> getPorts() {
         return Collections.singletonList(mPort);
+    }
+
+    @Override
+    public UsbPortDeviceType getDeviceType() {
+        UsbPortDeviceType type = UsbPortDeviceType.USB_CUSTOM_TYPE;
+        type.setValue(setDriverName());
+        return type;
     }
 }

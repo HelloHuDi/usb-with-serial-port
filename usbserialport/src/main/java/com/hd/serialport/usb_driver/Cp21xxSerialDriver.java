@@ -27,8 +27,9 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.hardware.usb.UsbInterface;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 
-import com.hd.serialport.config.UsbPortDeviceType;
+import com.hd.serialport.config.DriversType;
 import com.hd.serialport.utils.L;
 
 import java.io.IOException;
@@ -40,14 +41,19 @@ public class Cp21xxSerialDriver extends CommonUsbSerialDriver {
 
     private static final String TAG = Cp21xxSerialDriver.class.getSimpleName();
 
-    public Cp21xxSerialDriver(UsbDevice device) {
-        mDevice = device;
-        mPort = new Cp21xxSerialPort(mDevice, 0);
+    public Cp21xxSerialDriver(UsbDevice mDevice) {
+        super(mDevice);
     }
 
     @Override
-    public UsbPortDeviceType getDeviceType() {
-        return UsbPortDeviceType.USB_CP21xx;
+    public UsbSerialPort setPort(UsbDevice mDevice) {
+        return new Cp21xxSerialPort(mDevice, 0);
+    }
+
+    @NonNull
+    @Override
+    public String setDriverName() {
+        return DriversType.USB_CP21xx;
     }
 
     public class Cp21xxSerialPort extends CommonUsbSerialPort {
