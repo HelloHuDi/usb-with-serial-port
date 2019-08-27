@@ -6,9 +6,9 @@
 <a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.3.4-blue.svg"></img></a>
 </p>
 
-### usb-serial-port-measure是对usbserialport的深度封装，力求用最少代码完成usb及串口设备的测量
+**usb-serial-port-measure是对usbserialport的深度封装，力求用最少代码完成usb及串口设备的测量**
 
-## android studio 引入：
+**android studio 引入：**
 
 ```
 dependencies { 
@@ -17,9 +17,9 @@ dependencies {
   }
 ```
 
-## 用法：
+**用法：**
 
-### 1.在application 初始化：
+**1.在application 初始化：**
 
 ```
 public class AIOApp extends Application {
@@ -68,7 +68,7 @@ public class AIOApp extends Application {
 
 ```
 
-### 2.开始测量
+**2.开始测量**
 ```
     @Override
     protected void onResume() {
@@ -88,8 +88,8 @@ public class AIOApp extends Application {
     }
 
 ```
-### 3.解析类必须继承Parser类
 
+**3.解析类必须继承Parser类**
 ```
 public class TestParser extends Parser {
 
@@ -110,7 +110,7 @@ public class TestParser extends Parser {
 
 ```
 
-### 4.停止测量(测量错误及完成测量后默认停止)
+**4.停止测量(测量错误及完成测量后默认停止)**
 ```
     @Override
     protected void onPause() {
@@ -121,7 +121,7 @@ public class TestParser extends Parser {
 
 ```
 
-### License
+**License**
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
