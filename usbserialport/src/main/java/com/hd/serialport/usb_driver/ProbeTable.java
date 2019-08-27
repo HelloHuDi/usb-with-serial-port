@@ -37,6 +37,9 @@ public class ProbeTable {
 
     private final Map<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>> mProbeTable =new LinkedHashMap<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>>();
 
+    public Map<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>> getProbeTable(){
+        return mProbeTable;
+    }
     /**
      * Adds or updates a (vendor, product) pair in the table.
      *

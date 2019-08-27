@@ -12,8 +12,8 @@
 
 ```
 dependencies { 
-     implementation 'com.hd:usb-serial-port-measure:0.3.4@aar'
-     implementation 'com.hd:usbserialport:0.3.0'
+     implementation 'com.hd:usb-serial-port-measure:last-version@aar'
+     implementation 'com.hd:usbserialport:last-version'
   }
 ```
 

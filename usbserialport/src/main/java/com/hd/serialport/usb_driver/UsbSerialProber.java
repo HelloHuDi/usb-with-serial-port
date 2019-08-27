@@ -24,6 +24,7 @@ package com.hd.serialport.usb_driver;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.support.annotation.Keep;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import com.hd.serialport.config.DriversType;
@@ -35,6 +36,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author mike wakerly (opensource@hoho.com)
@@ -71,7 +73,7 @@ public class UsbSerialProber {
             }
             probeTable.addDriver(pair.second);
         }
-        for(Class<? extends CommonUsbSerialDriver> driver : defaultDriverList){
+        for (Class<? extends CommonUsbSerialDriver> driver : defaultDriverList) {
             probeTable.addDriver(driver);
         }
         return probeTable;
@@ -115,6 +117,24 @@ public class UsbSerialProber {
         final int vendorId = usbDevice.getVendorId();
         final int productId = usbDevice.getProductId();
         final Class<? extends UsbSerialDriver> driverClass = mProbeTable.findDriver(vendorId, productId);
+        return getUsbSerialDriver(usbDevice, driverClass);
+    }
+
+    @Keep
+    public UsbSerialDriver probeDevice(final UsbDevice usbDevice, String driverName) {
+        if(TextUtils.isEmpty(driverName))return probeDevice(usbDevice);
+        UsbSerialDriver driver = null;
+        Map<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>> table = mProbeTable.getProbeTable();
+        for (Map.Entry<Pair<Integer, Integer>, Class<? extends UsbSerialDriver>> entry : table.entrySet()) {
+            driver = getUsbSerialDriver(usbDevice, entry.getValue());
+            if (null != driver && driverName.equals(driver.getDeviceType().getValue())) {
+                return driver;
+            }
+        }
+        return driver;
+    }
+
+    private UsbSerialDriver getUsbSerialDriver(UsbDevice usbDevice, Class<? extends UsbSerialDriver> driverClass) {
         if (driverClass != null) {
             final UsbSerialDriver driver;
             try {
@@ -130,6 +150,9 @@ public class UsbSerialProber {
 
     public UsbSerialDriver convertDriver(UsbDevice usbDevice, String driverName) {
         UsbSerialDriver driver = probeDevice(usbDevice);
+        if (driver == null) {
+            driver = probeDevice(usbDevice, driverName);
+        }
         if (driver == null)
             throw new NullPointerException("unknown usb device type name : " + driverName);
         return driver;
