@@ -32,7 +32,7 @@ import java.io.IOException;
  *
  * @author mike wakerly (opensource@hoho.com)
  */
-abstract class CommonUsbSerialPort implements UsbSerialPort {
+public abstract class CommonUsbSerialPort implements UsbSerialPort {
 
     public static final int DEFAULT_READ_BUFFER_SIZE = 16 * 1024;
     public static final int DEFAULT_WRITE_BUFFER_SIZE = 16 * 1024;

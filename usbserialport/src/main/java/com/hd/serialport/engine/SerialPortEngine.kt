@@ -23,7 +23,7 @@ class SerialPortEngine(context: Context) : Engine(context) {
             if (parameter.devicePath.isNullOrEmpty()) {
                 measureListener.measureError(parameter.tag, context.resources.getString(R.string.error_configuration))
             } else {
-                val serialPort = SerialPort(File(parameter.devicePath), parameter.baudRate, parameter.flags)
+                val serialPort = SerialPort(File(parameter.devicePath!!), parameter.baudRate, parameter.flags)
                 val serialPortReadWriteRunnable = SerialPortReadWriteRunnable(parameter.devicePath!!, serialPort, measureListener, this, parameter.tag)
                 submit(parameter.tag, serialPortReadWriteRunnable)
             }

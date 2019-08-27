@@ -13,7 +13,7 @@ import java.util.List;
  * Created by hd on 2017/2/27 0027.
  */
 @Keep
-abstract class CommonUsbSerialDriver implements UsbSerialDriver {
+public abstract class CommonUsbSerialDriver implements UsbSerialDriver {
 
     public UsbDevice mDevice;
 

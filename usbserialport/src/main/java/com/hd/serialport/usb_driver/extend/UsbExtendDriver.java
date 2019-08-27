@@ -1,5 +1,6 @@
 package com.hd.serialport.usb_driver.extend;
 
+import android.support.annotation.NonNull;
 import android.util.Pair;
 
 import com.hd.serialport.usb_driver.UsbSerialDriver;
@@ -59,7 +60,7 @@ public class UsbExtendDriver {
          * list.add(new Pair("custom3 value",CustomDriver3.class));
          * setDrivers(list);
          */
-        public Extender setDrivers(List<Pair<String, Class<? extends UsbSerialDriver>>> drivers) {
+        public Extender setDrivers(@NonNull List<Pair<String, Class<? extends UsbSerialDriver>>> drivers) {
             this.drivers = drivers;
             return this;
         }
@@ -78,7 +79,6 @@ public class UsbExtendDriver {
             });
             new UsbExtendDriver(this);
         }
-
     }
 
 }
