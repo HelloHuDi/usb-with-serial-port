@@ -42,6 +42,11 @@ public class UsbExtendDriver {
         extendDrivers = extender.drivers;
     }
 
+    private void clearExtendDrivers(){
+        extendDrivers.clear();
+        extendDrivers = null;
+    }
+
     public List<Pair<String, Class<? extends UsbSerialDriver>>> getExtendDrivers(){
         return extendDrivers;
     }
@@ -63,6 +68,10 @@ public class UsbExtendDriver {
         public Extender setDrivers(@NonNull List<Pair<String, Class<? extends UsbSerialDriver>>> drivers) {
             this.drivers = drivers;
             return this;
+        }
+
+        public void clearExtendDrivers(){
+            new UsbExtendDriver().clearExtendDrivers();
         }
 
         public void extend() {

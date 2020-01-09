@@ -55,7 +55,7 @@ public class UsbSerialProber {
 
     private static ProbeTable getDefaultProbeTable() {
         final ProbeTable probeTable = new ProbeTable();
-        List<Pair<String, Class<? extends UsbSerialDriver>>> drivers = new UsbExtendDriver().getExtendDrivers();
+        final List<Pair<String, Class<? extends UsbSerialDriver>>> drivers = new UsbExtendDriver().getExtendDrivers();
 
         List<String> defaultTypeList = Arrays.asList(DriversType.USB_CDC_ACM, DriversType.USB_CP21xx,//
                                                      DriversType.USB_FTD, DriversType.USB_PL2303,//
@@ -64,14 +64,15 @@ public class UsbSerialProber {
         List<Class<? extends CommonUsbSerialDriver>> defaultDriverList = Arrays.asList(CdcAcmSerialDriver.class, Cp21xxSerialDriver.class,//
                                                                                        FtdiSerialDriver.class, ProlificSerialDriver.class,//
                                                                                        Ch34xSerialDriver.class);
-
-        int index;
-        for (Pair<String, Class<? extends UsbSerialDriver>> pair : drivers) {
-            index = defaultTypeList.indexOf(pair.first);
-            if (index > 0) {
-                defaultDriverList.remove(index);
+        if(null != drivers && !drivers.isEmpty()) {
+            int index;
+            for (Pair<String, Class<? extends UsbSerialDriver>> pair : drivers) {
+                index = defaultTypeList.indexOf(pair.first);
+                if (index > 0) {
+                    defaultDriverList.remove(index);
+                }
+                probeTable.addDriver(pair.second);
             }
-            probeTable.addDriver(pair.second);
         }
         for (Class<? extends CommonUsbSerialDriver> driver : defaultDriverList) {
             probeTable.addDriver(driver);
