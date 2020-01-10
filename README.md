@@ -3,7 +3,7 @@
 </p>
 <h3 align="center">usbserialport</h3>
 <p align="center">
-<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.4.0-blue.svg"></img></a>
+<a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.4.1-blue.svg"></img></a>
 </p>
 
 **本库使用kotlin语言开发，提供android系统下usb转串口及串口(UART,RS232)通信方式**
