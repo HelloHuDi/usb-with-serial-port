@@ -12,7 +12,7 @@
 
 **[基于本库开发的简单调试工具](https://github.com/HelloHuDi/usbSerialPortTools)**
 
-**[调试工具apk下载](https://raw.githubusercontent.com/HelloHuDi/usbSerialPortTools/master/app-release.apk)**
+**[调试工具apk下载](https://raw.githubusercontent.com/HelloHuDi/usbSerialPortTools/master/app/release/app-release.apk)**
 
 **android studio 添加**
 
