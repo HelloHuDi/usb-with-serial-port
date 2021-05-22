@@ -6,6 +6,8 @@
 <a href="https://github.com/HelloHuDi/usb-with-serial-port/releases" target="_blank"><img src="https://img.shields.io/badge/release-v0.4.1-blue.svg"></img></a>
 </p>
 
+**2021年5月更新: 因为很久没有参与硬件串口方面的工作，在加上手头并没有实际的硬件设备，所以对于大家提出的现实问题我能给与的帮助比较有限，因此本项目不在维护。**
+
 **本库使用kotlin语言开发，提供android系统下usb转串口及串口(UART,RS232)通信方式**
 
 **依赖本库的工程需要提供kotlin支持，若无法提供可参考本库底层实现 [参考串口通信源码](https://github.com/cepr/android-serialport-api) [参考usb转串口源码](https://github.com/mik3y/usb-serial-for-android)** 
